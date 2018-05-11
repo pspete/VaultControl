@@ -86,7 +86,79 @@ Describe $FunctionName {
 					$CommandParameters -eq "Status Vault"
 
 				} -Times 1 -Exactly -Scope It
+
 			}
+
+			It "does not throw if no result on StdOut" {
+
+				{$InputObj | Get-PARComponent -Verbose} | Should Not throw
+
+			}
+
+			It "reports running status" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd "README.md")
+				}
+
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "The vault service is running"}
+				}
+
+				$InputObj | Get-PARComponent -Verbose | Select-Object -ExpandProperty Status | Should Be "Running"
+
+			}
+
+			It "reports starting status" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd "README.md")
+				}
+
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "The vault service is starting"}
+				}
+
+				$InputObj | Get-PARComponent -Verbose | Select-Object -ExpandProperty Status | Should Be "Starting"
+
+			}
+
+			It "reports stopped status" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd "README.md")
+				}
+
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "The vault service is stopped"}
+				}
+
+				$InputObj | Get-PARComponent -Verbose | Select-Object -ExpandProperty Status | Should Be "Stopped"
+
+			}
+
+			It "reports unknown status in full" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd "README.md")
+				}
+
+				Mock Invoke-PARClient -MockWith {
+					@{"StdOut" = "The vault said something else"}
+				}
+
+				$InputObj | Get-PARComponent -Verbose | Select-Object -ExpandProperty Status | Should Be "The vault said something else"
+
+			}
+
 
 		}
 
