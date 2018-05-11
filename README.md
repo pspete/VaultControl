@@ -2,30 +2,29 @@
 
 Invoke CyberArk PARClient.exe Utility with PowerShell
 
-**Note**: This is a work in progress - it works, but may change as it is developed prior to a Version 1.0 release.
-~~Comment based help~~, examples & error checking are all currently missing, but initial core functionality is present.
+**A work in progress - changes probable prior to a Version 1.0 release**
 
 Feedback, Issues and Pull Requests are more than welcome.
 
 ## Getting Started
 
-  - `import-module VaultControl`
-  - Run `Set-PARConfiguration` to set the path to the `PARClient.exe` utility and any non-default port used for PARClient operations.
+- `import-module VaultControl`
+- Run `Set-PARConfiguration` to set the path to the `PARClient.exe` utility and any non-default port used for PARClient operations.
 
-## Functions
+### List of Commands
 
-  - `Get-PARServer` - Gets resource and component infomration from a vault
-  - `Get-PARComponent` - Gets vault component status
-  - `Get-PARComponentLog` - Gets component log content
-  - `Get-PARComponentConfig` - Gets DBParm/PADR parameter values
-  - `Get-PARServerLog` - Gets OS event logs from vault server
-  - `Get-PARService` - Gets status of monitored Operating System services
-  - `Restart-PARComponent` - Restarts CyberArk Vault/PADR/ENE/CVM component
-  - `Restart-PARServer` - Initiates reboot of Vault server
-  - `Set-PARComponentConfig` - Updates DBParm/PADR parameter values
-  - `Start-PARComponent` - Starts CyberArk Vault/PADR/ENE/CVM component
-  - `Stop-PARComponent` - Stops CyberArk Vault/PADR/ENE/CVM component
-  - `Set-PARConfiguration` - Sets default values for path to PARClient.exe & PARClient Port
+- `Get-PARServer` - Gets resource and component information from a vault
+- `Get-PARComponent` - Gets vault component status
+- `Get-PARComponentLog` - Gets component log content
+- `Get-PARComponentConfig` - Gets DBParm/PADR parameter values
+- `Get-PARServerLog` - Gets OS event logs from vault server
+- `Get-PARService` - Gets status of monitored Operating System services
+- `Restart-PARComponent` - Restarts CyberArk Vault/PADR/ENE/CVM component
+- `Restart-PARServer` - Initiates reboot of Vault server
+- `Set-PARComponentConfig` - Updates DBParm/PADR parameter values
+- `Start-PARComponent` - Starts CyberArk Vault/PADR/ENE/CVM component
+- `Stop-PARComponent` - Stops CyberArk Vault/PADR/ENE/CVM component
+- `Set-PARConfiguration` - Sets default values for path to PARClient.exe & PARClient Port
 
 ## Installation
 
@@ -56,4 +55,3 @@ $env:PSModulePath.split(';')
 Extract the archive
 
 Copy the ```VaultControl``` folder to your "Powershell Modules" directory of choice.
-
