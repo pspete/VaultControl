@@ -3,7 +3,7 @@
 Invoke CyberArk PARClient.exe Utility with PowerShell
 
 **Note**: This is a work in progress - it works, but may change as it is developed prior to a Version 1.0 release.
-Comment based help, examples & error checking are all currently missing, but initial core functionality is present.
+~~Comment based help~~, examples & error checking are all currently missing, but initial core functionality is present.
 
 Feedback, Issues and Pull Requests are more than welcome.
 
@@ -11,7 +11,7 @@ Feedback, Issues and Pull Requests are more than welcome.
 
   - `import-module VaultControl`
   - Run `Set-PARConfiguration` to set the path to the `PARClient.exe` utility and any non-default port used for PARClient operations.
-  
+
 ## Functions
 
   - `Get-PARServer` - Gets resource and component infomration from a vault
