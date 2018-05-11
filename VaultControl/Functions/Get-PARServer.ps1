@@ -1,6 +1,28 @@
 Function Get-PARServer {
 	<#
+	.SYNOPSIS
+	Gets OS resource information from remote vault
 
+	.DESCRIPTION
+	Returns details of CPU, Memory & Disk usage from remote vault, as well as details of installed components.
+
+	.PARAMETER Server
+	The name or address of the remote Vault server to target with PARClient
+
+	.PARAMETER Password
+	The password for remote operations via PARClient as a secure string
+
+	.PARAMETER Credential
+	The password for remote operations via PARClient held in a credential object
+
+	.PARAMETER PassFile
+	The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+	operations via PARClient
+
+	.EXAMPLE
+	Get-PARServer -Server EPV1
+
+	Returns object containing current resource consumption & installed component names & versions.
 	#>
 	[CmdletBinding()]
 	Param(
@@ -54,35 +76,62 @@ Function Get-PARServer {
 
 		$CPU = ($CPU.StdOut  | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
 
-		$Disk = $Disk.StdOut | Select-String '(.+)' -AllMatches | ForEach-Object {
-			$DiskInfo = $_.Line.Split(" ")
-			[PSCustomObject]@{
-				"Drive"     = $DiskInfo[0]
-				"Space(MB)" = ($DiskInfo[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
-				"Used(%)"   = ($DiskInfo[2] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
-			}
-		}
+		If($Disk) {
 
-		$Memory = ($Memory.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
-			$MemoryInfo = $_.Split(":")
-			$MemoryData = ($MemoryInfo[1] | Select-String '(\S+)' -AllMatches).Matches.Value
-			[PSCustomObject]@{
-				"MemoryType" = ($MemoryInfo[0].Split(" "))[0]
-				"Total(K)"   = (($MemoryData[0]).Split("=")[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
-				"Free(K)"    = (($MemoryData[1]).Split("=")[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
-				"Used(%)"    = (($MemoryData[2]).Split("=")[1] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+			$Disk = $Disk.StdOut | Select-String '(.+)' -AllMatches | ForEach-Object {
+
+				$DiskInfo = $_.Line.Split(" ")
+
+				[PSCustomObject]@{
+
+					"Drive"     = $DiskInfo[0]
+					"Space(MB)" = ($DiskInfo[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
+					"Used(%)"   = ($DiskInfo[2] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+
+				}
+
 			}
 
 		}
 
-		#([A-Z][a-z]+)\smodule\s\w+\.exe\W+(\d+\D\d+\D\d+\D\d+)
-		$Components = ($Components.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
-			$Component = $_.Split(" ")
-			$Version = ($_ | Select-String "(\d+\D\d+\D\d+\D\d+)" -AllMatches).Matches.Value
-			[PSCustomObject]@{
-				Component = $Component[0]
-				Version   = $Version
+		If($Memory) {
+
+			$Memory = ($Memory.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
+
+				$MemoryInfo = $_.Split(":")
+
+				$MemoryData = ($MemoryInfo[1] | Select-String '(\S+)' -AllMatches).Matches.Value
+
+				[PSCustomObject]@{
+
+					"MemoryType" = ($MemoryInfo[0].Split(" "))[0]
+					"Total(K)"   = (($MemoryData[0]).Split("=")[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
+					"Free(K)"    = (($MemoryData[1]).Split("=")[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
+					"Used(%)"    = (($MemoryData[2]).Split("=")[1] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+
+				}
+
 			}
+
+		}
+
+		If($Components) {
+
+			$Components = ($Components.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
+
+				$Component = $_.Split(" ")
+
+				$Version = ($_ | Select-String "(\d+\D\d+\D\d+\D\d+)" -AllMatches).Matches.Value
+
+				[PSCustomObject]@{
+
+					Component = $Component[0]
+					Version   = $Version
+
+				}
+
+			}
+
 		}
 
 		[PSCustomObject]@{

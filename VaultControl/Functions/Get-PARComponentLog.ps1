@@ -1,5 +1,50 @@
 Function Get-PARComponentLog {
 	<#
+	.SYNOPSIS
+	Returns events from remote component log.
+
+	.DESCRIPTION
+	Gets events from logs for remote Vault, PADR, CVM or ENE.
+
+	DYNAMICPARAMETER LogFile
+	For ENE & CVM Logs, the log file to return must be specified. Accepted values are "Console" or "Trace"
+
+	DYNAMICPARAMETER TimeFrom
+	For Vault or PADR log queries, optionally provide a datetime from which to return the logs from.
+
+	DYNAMICPARAMETER Lines
+	For Vault log queries, optionally provide the number of log lines to return.
+
+	.PARAMETER Server
+	The name or address of the remote Vault server to target with PARClient
+
+	.PARAMETER Password
+	The password for remote operations via PARClient as a secure string
+
+	.PARAMETER Credential
+	The password for remote operations via PARClient held in a credential object
+
+	.PARAMETER PassFile
+	The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+	operations via PARClient
+
+	.PARAMETER Component
+	The name of the component to query. Vault, PADR, CVM or ENE are the accepted values
+
+	.EXAMPLE
+	Get-PARComponentLog -Server EPV1 -Password $SecureString -Component Vault -TimeFrom (Get-Date).AddDays(-1)
+
+	Show events from the ITALOG file on Vault EPV1 from the last 24 hours
+
+	.EXAMPLE
+	Get-PARComponentLog -Server EPV1 -Password $SecureString -Component ENE -LogFile Trace
+
+	Show events from the ENE Trace log on vault EPV1
+
+	.EXAMPLE
+	Get-PARComponentLog -Server EPV1 -Password $SecureString -Component Vault -Lines 10
+
+	Show the last 10 lines of the ITALOG file on vault EPV1
 
 	#>
 	[CmdletBinding()]
@@ -125,21 +170,25 @@ Function Get-PARComponentLog {
 
 		}
 
-		$logs = Invoke-PARClient @PSBoundParameters
+		$Result = Invoke-PARClient @PSBoundParameters
 
-		($logs.StdOut).Split("`n") | ForEach-Object {
+		If($Result.StdOut) {
 
-			Write-Debug "LogLine: $_"
+			($Result.StdOut).Split("`n") | ForEach-Object {
 
-			$event = ($_ | Select-String $Pattern -AllMatches)
+				Write-Debug "LogLine: $_"
 
-			if($event -ne $null) {
+				$event = ($_ | Select-String $Pattern -AllMatches)
 
-				[PSCustomObject]@{
+				if($event -match '\S') {
 
-					"Time"    = $event.Matches.Groups[1].Value -replace '(\s\W\s)', ' '
-					"Code"    = $event.Matches.Groups[2].Value
-					"Message" = $event.Matches.Groups[3].Value
+					[PSCustomObject]@{
+
+						"Time"    = $event.Matches.Groups[1].Value -replace '(\s\W\s)', ' '
+						"Code"    = $event.Matches.Groups[2].Value
+						"Message" = $event.Matches.Groups[3].Value
+
+					}
 
 				}
 
