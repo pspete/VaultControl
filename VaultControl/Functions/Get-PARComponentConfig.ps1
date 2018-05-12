@@ -78,9 +78,9 @@ Function Get-PARComponentConfig {
 		#Create a RuntimeDefinedParameterDictionary
 		$Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
 
-		if($Component -eq "VAULT") {
+		if($Component -eq "Vault") {
 
-			New-DynamicParam -Name Parameter -Type String -Mandatory -ValueFromPipelineByPropertyName `
+			New-DynamicParam -Name Parameter -Mandatory -ValueFromPipelineByPropertyName `
 				-ValidateSet "DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling" `
 				-DPDictionary $Dictionary
 
@@ -88,7 +88,7 @@ Function Get-PARComponentConfig {
 
 		if($Component -eq "PADR") {
 
-			New-DynamicParam -Name Parameter -Type String -Mandatory -ValueFromPipelineByPropertyName `
+			New-DynamicParam -Name Parameter -Mandatory -ValueFromPipelineByPropertyName `
 				-ValidateSet "EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode" `
 				-DPDictionary $Dictionary
 

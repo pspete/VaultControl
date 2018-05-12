@@ -67,7 +67,7 @@ Describe $FunctionName {
 
 			}
 
-			It "executes command" -Pending {
+			It "executes command" {
 
 				$InputObj | Get-PARServer -verbose
 

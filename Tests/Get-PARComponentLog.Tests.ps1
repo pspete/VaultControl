@@ -58,7 +58,7 @@ Describe $FunctionName {
 			BeforeEach {
 
 				Mock Invoke-PARClient -MockWith {
-					Write-Output @{}
+					Write-Output @{"StdOut" = "04/05/2018 16:01:40 ITAIGM03I DebugLevel 1 ACTIVATED for Class PE"}
 				}
 
 				$InputObj = [pscustomobject]@{
@@ -86,6 +86,49 @@ Describe $FunctionName {
 					$CommandParameters -eq "GetLog Vault"
 
 				} -Times 1 -Exactly -Scope It
+
+			}
+
+			It "reports returned event time" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd "README.md")
+				}
+
+				$InputObj | Get-PARComponentLog -Verbose | Select-Object -ExpandProperty Time | Should Be "04/05/2018 16:01:40"
+
+			}
+
+			It "reports returned event code" {
+
+				$InputObj | Get-PARComponentLog -Verbose | Select-Object -ExpandProperty Code | Should Be "ITAIGM03I"
+
+			}
+
+			It "reports returned event message" {
+
+				$InputObj | Get-PARComponentLog -Verbose | Select-Object -ExpandProperty Message | Should Be "DebugLevel 1 ACTIVATED for Class PE"
+
+			}
+
+			It "reports returned event time" -Pending {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					TimeFrom  = (Get-Date 01/01/1970)
+				}
+
+				$InputObj | Get-PARComponentLog -TimeFrom $(Get-Date 01/01/1970) -Verbose | Select-Object -ExpandProperty Time | Should Be "04/05/2018 16:01:40"
+
+				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+
+					$CommandParameters -eq "GetLog Vault /TimeFrom 01011970:0000"
+
+				} -Times 1 -Exactly -Scope It
+
 			}
 
 		}

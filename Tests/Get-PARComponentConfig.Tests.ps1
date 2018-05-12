@@ -86,7 +86,25 @@ Describe $FunctionName {
 					$CommandParameters -eq "GetParm Vault"
 
 				} -Times 1 -Exactly -Scope It
+
 			}
+
+			It "reports returned value status" -Pending {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd "README.md")
+				}
+
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "DebugLevel=PE(1),PERF(1)"}
+				}
+
+				$InputObj | Get-PARComponentConfig -Parameter DebugLevel -Verbose | Select-Object -ExpandProperty Value | Should Be "PE(1),PERF(1)"
+
+			}
+
 
 		}
 
