@@ -57,13 +57,16 @@ Describe $FunctionName {
 			BeforeEach {
 
 				Mock Invoke-PARClient -MockWith {
-					Write-Output @{}
+					Write-Output @{
+						"Server" = "Some Server"
+						"StdOut" = "Some Message"
+					}
 				}
 
 				$InputObj = [pscustomobject]@{
 					Server    = "SomeServer"
 					Component = "Vault"
-					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					PassFile  = (Join-Path $pwd "README.md")
 				}
 
 			}
