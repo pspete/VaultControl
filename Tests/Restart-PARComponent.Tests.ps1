@@ -58,7 +58,7 @@ Describe $FunctionName {
 			BeforeEach {
 
 				Mock Invoke-PARClient -MockWith {
-					Write-Output @{}
+					Write-Output @{"StdOut" = "restarted"}
 				}
 
 				$InputObj = [pscustomobject]@{
@@ -79,6 +79,12 @@ Describe $FunctionName {
 
 			It "executes command with expected parameters" {
 
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd README.md)
+				}
+				#$DebugPreference = "Continue"
 				$InputObj | Restart-PARComponent -verbose
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {
