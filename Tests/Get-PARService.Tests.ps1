@@ -57,7 +57,7 @@ Describe $FunctionName {
 			BeforeEach {
 
 				Mock Invoke-PARClient -MockWith {
-					Write-Output @{}
+					Write-Output @{"StdOut" = "PrivateArk Database is running"}
 				}
 
 				$InputObj = [pscustomobject]@{
@@ -76,13 +76,20 @@ Describe $FunctionName {
 
 			}
 
-			It "executes command with expected parameters" -Pending {
+			It "executes command with expected parameters" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd README.md)
+
+				}
 
 				$InputObj | Get-PARService -verbose
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {
 
-					$CommandParameters -eq 'ServiceStatus /ServiceName /"*/"'
+					$CommandParameters -eq 'ServiceStatus /ServiceName \"*\"'
 
 				} -Times 1 -Exactly -Scope It
 			}
