@@ -77,7 +77,7 @@ Function Get-PARServerLog {
 			Mandatory = $false,
 			ValueFromPipelineByPropertyName = $true
 		)]
-		[datetime]$TimeFrom = (Get-Date (Get-Date).AddMinutes(-10) -Format ddMMyyyy:HHmm)
+		[datetime]$TimeFrom #= (Get-Date (Get-Date).AddMinutes(-10) -Format ddMMyyyy:HHmm)
 	)
 
 	Begin {

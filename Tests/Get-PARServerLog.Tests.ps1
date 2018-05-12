@@ -58,7 +58,18 @@ Describe $FunctionName {
 			BeforeEach {
 
 				Mock Invoke-PARClient -MockWith {
-					Write-Output @{}
+					Write-Output @{
+						"StdOut" = @"
+EventLogRecordTime: Wed May 09 20:03:13 2018
+Source: Microsoft-Windows-Security-SPP
+Computer: zEPV1
+Event ID: 1073742727
+Event Type: 0
+Description: The Software Protection service has stopped.
+"@
+
+					}
+
 				}
 
 				$InputObj = [pscustomobject]@{
@@ -71,7 +82,7 @@ Describe $FunctionName {
 
 			}
 
-			It "executes command" -Pending {
+			It "executes command" {
 
 				$InputObj | Get-PARServerLog -verbose
 
@@ -79,13 +90,20 @@ Describe $FunctionName {
 
 			}
 
-			It "executes command with expected parameters" -Pending {
+			It "executes command with expected parameters" {
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					PassFile  = (Join-Path $pwd README.md)
+					LogName   = "Application"
+					TimeFrom  = (Get-Date 1/1/1970 -Hour 12 -Minute 34 -Second 56)
+				}
 
 				$InputObj | Get-PARServerLog -verbose
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {
 
-					$CommandParameters -eq "GetOSLog /Name -LogName Application /TimeFrom 01011970:1234"
+					$CommandParameters -eq "GetOSLog /Name Application /TimeFrom 01011970:1234"
 
 				} -Times 1 -Exactly -Scope It
 			}
