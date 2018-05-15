@@ -81,7 +81,7 @@
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "Credential"
 		)]
-		[ValidateNotNullOrEmpty]
+		#[ValidateNotNullOrEmpty]
 		[pscredential]$Credential,
 
 		[Parameter(
@@ -176,26 +176,27 @@
 			$Process.StartInfo.WindowStyle = "hidden"
 
 			#Start Process
-			$Process.start() | Out-Null
+			Start-PARClientProcess -Process $Process
+			#$Process.start() | Out-Null
 
 			#Read Output Stream First
-			$StdOut = $Process.StandardOutput.ReadToEnd()
-			$StdErr = $Process.StandardError.ReadToEnd()
+			#$StdOut = $Process.StandardOutput.ReadToEnd()
+			#$StdErr = $Process.StandardError.ReadToEnd()
 
 			#If you wait for the process to exit before reading StandardOutput
 			#the process can block trying to write to it, so the process never ends.
-			$Process.WaitForExit()
+			#$Process.WaitForExit()
 
-			Write-Debug "Exit Code: $($Process.ExitCode)"
+			#Write-Debug "Exit Code: $($Process.ExitCode)"
 
-			[PSCustomObject] @{
+			#[PSCustomObject] @{
 
-				"ExitCode" = $Process.ExitCode
-				"StdOut"   = $StdOut
-				"StdErr"   = $StdErr
-				"Server"   = $Server.ToUpper()
+			#	"ExitCode" = $Process.ExitCode
+			#	"StdOut"   = $StdOut
+			#	"StdErr"   = $StdErr
+			#	"Server"   = $Server.ToUpper()
 
-			}
+			#}
 
 		}
 
