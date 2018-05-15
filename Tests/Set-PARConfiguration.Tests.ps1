@@ -35,25 +35,36 @@ Describe $FunctionName {
 
 	InModuleScope $ModuleName {
 
-		Context "Mandatory Parameters" {
-
-
-		}
-
-		Context "Input" {
+		Context "General" {
 
 			BeforeEach {
 
+				Mock Test-Path -MockWith {
+					$true
+				}
 
+				$InputObj = [pscustomobject]@{
+					ClientPath = "SomePath"
+					Port       = 666
+				}
 
 			}
 
+			it "sets value of script scope variable" {
 
-		}
+				$InputObj | Set-PARConfiguration
+				$Script:PAR | Should Not BeNullOrEmpty
+			}
 
-		Context "Output" {
+			it "sets client path property value" {
+				$InputObj | Set-PARConfiguration
+				$($Script:PAR.ClientPath) | Should Be "SomePath"
+			}
 
-
+			it "sets client path property value" {
+				$InputObj | Set-PARConfiguration
+				$($Script:PAR.Port) | Should Be 666
+			}
 
 		}
 
