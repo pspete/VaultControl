@@ -47,7 +47,7 @@
 
     #>
 
-	[CmdLetBinding()]
+	[CmdLetBinding(SupportsShouldProcess)]
 	param(
 
 		[Parameter(
