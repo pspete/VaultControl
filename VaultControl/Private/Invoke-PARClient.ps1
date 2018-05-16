@@ -2,12 +2,10 @@
 
 	<#
     .SYNOPSIS
-	Executes specified PARClient command and arguments
+	Defines specified PARClient command and arguments
 
     .DESCRIPTION
-	Designed to start PARClient process with arguments required for specific command.
-
-	Returns Object containing ExitCode, StdOut & StdErr
+	Defines a PARClient process object with arguments required for specific command.
 
 	.PARAMETER PARClient
 	The Path to PARClient.exe.

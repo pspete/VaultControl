@@ -2,45 +2,20 @@
 
 	<#
     .SYNOPSIS
-	Executes specified PARClient command and arguments
+	Starts PARClient process
 
     .DESCRIPTION
-	Designed to start PARClient process with arguments required for specific command.
+	Designed to receive PARClient process object from Invoke-PARClient.
 
 	Returns Object containing ExitCode, StdOut & StdErr
 
-	.PARAMETER PARClient
-	The Path to PARClient.exe.
-	Defaults to value of $Script:PAR.ClientPath, which is set during module import or via Set-PARConfiguration.
-
-	.PARAMETER Server
-	The name or address of the Vault server to target
-
-	.PARAMETER Password
-	SecureString of password used for PARClient operations
-
-	.PARAMETER Credential
-	A credential object containing the password used for PARClient operations
-
-	.PARAMETER PassFile
-	The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
-	operations via PARClient
-
-	.PARAMETER CommandParameters
-	The PARClient command to execute
-
-	.PARAMETER PAROptions
-	Additional command parameters. By default specifies /Q /C and /StateFileName.
-	StateFileName is set to a file named after the process ID of the script, and with the local temp directory path
-
-	.PARAMETER RemainingArgs
-	A catch all parameter, accepts any remaining values from pipeline.
-	Intended to suppress errors when piping in an object.
+	.PARAMETER Process
+	System.Diagnostics.Process object containing PARClient parameters
 
     .EXAMPLE
-	Invoke-PARClient -Server EPV1 -Password $SecureString -CommandParameters "GetParm Vault DebugLevel"
+	Start-PARClientProcess -Process $Process
 
-	Invokes the GetParm action against the Vault on EPV1 and returns the DebugLevel parameter value.
+	Invokes the Start method on the $Process object
 
     .NOTES
     	AUTHOR: Pete Maan
@@ -48,6 +23,7 @@
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSShouldProcess", "", Justification = "ShouldProcess handling is in Invoke-PARClient")]
 	param(
 
 		[Parameter(
