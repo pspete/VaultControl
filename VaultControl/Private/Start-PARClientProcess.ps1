@@ -30,7 +30,6 @@
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True
 		)]
-		[ValidateScript( {Test-Path $_})]
 		[System.Diagnostics.Process]$Process
 	)
 
