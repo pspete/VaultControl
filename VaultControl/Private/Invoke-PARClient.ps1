@@ -81,7 +81,6 @@
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "Credential"
 		)]
-		#[ValidateNotNullOrEmpty]
 		[pscredential]$Credential,
 
 		[Parameter(
