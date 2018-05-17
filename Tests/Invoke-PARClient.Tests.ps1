@@ -55,13 +55,9 @@ Describe $FunctionName {
 
 		}
 
-		Context "Input" {
+		Context "Default" {
 
 			BeforeEach {
-
-				Mock Test-Path -MockWith {
-					$true
-				}
 
 				Mock Start-PARClientProcess -MockWith {
 					Write-Output @{}
@@ -74,6 +70,12 @@ Describe $FunctionName {
 					Port              = 1234
 				}
 
+
+			}
+
+			It "tests path" {
+
+				{$InputObj | Invoke-PARClient -ClientPath .\RandomFile.exe} | Should Throw
 
 			}
 
@@ -92,6 +94,55 @@ Describe $FunctionName {
 				New-Variable -Name PAR -Value $object
 
 				{$InputObj | Invoke-PARClient} | Should Throw
+
+			}
+
+			It "throws if `$PAR.ClientPath is not resolvable" {
+
+				$object = [PSCustomObject]@{
+					ClientPath = ".\RandomFile.Exe"
+					prop2      = "Value2"
+				}
+				New-Variable -Name PAR -Value $object
+
+				{$InputObj | Invoke-PARClient} | Should Throw
+
+			}
+
+			It "no throw if `$PAR.ClientPath is resolvable" {
+
+				$object = [PSCustomObject]@{
+					ClientPath = ".\README.md"
+					prop2      = "Value2"
+				}
+				New-Variable -Name PAR -Value $object
+
+				{$InputObj | Invoke-PARClient} | Should Throw
+
+			}
+
+
+		}
+
+		Context "ParameterSets" {
+
+			BeforeEach {
+
+				Mock Test-Path -MockWith {
+					$true
+				}
+
+				Mock Start-PARClientProcess -MockWith {
+					Write-Output @{}
+				}
+
+				$InputObj = [pscustomobject]@{
+					Server            = "SomeServer"
+					CommandParameters = "Some Command Parameters"
+					Password          = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Port              = 1234
+				}
+
 
 			}
 
@@ -142,13 +193,6 @@ Describe $FunctionName {
 
 				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It
 
-			}
-
-			it "fails if PARClient cannot be found" {
-				Mock Test-Path -MockWith {
-					$false
-				}
-				{$InputObj | Invoke-PARClient} | Should throw
 			}
 
 		}

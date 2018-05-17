@@ -52,7 +52,6 @@
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True
 		)]
-		[ValidateScript( {Test-Path $_})]
 		[string]$PARClient = $Script:PAR.ClientPath,
 
 		[Parameter(
