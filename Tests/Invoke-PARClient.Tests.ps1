@@ -13,11 +13,10 @@ $ModulePath = Resolve-Path "$Here\..\$ModuleName"
 #Define Path to Module Manifest
 $ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
-if( -not (Get-Module -Name $ModuleName -All)) {
-
-	Import-Module -Name "$ManifestPath" -Force -ErrorAction Stop
-
-}
+#Preference file must be removed and module must be re-imported for tests to complete
+Remove-Item -Path "$env:HOMEDRIVE$env:HomePath\PARConfiguration.xml" -Force -ErrorAction SilentlyContinue
+Remove-Module -Name $ModuleName -Force -ErrorAction SilentlyContinue
+Import-Module -Name "$ManifestPath" -Force -ErrorAction Stop
 
 BeforeAll {
 
