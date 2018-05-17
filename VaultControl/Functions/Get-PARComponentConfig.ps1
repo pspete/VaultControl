@@ -6,13 +6,6 @@ Function Get-PARComponentConfig {
 	.DESCRIPTION
 	Queries remote vault server for values contained in component configuration files DBPARM.ini or PADR.ini.
 
-	DYNAMICPARAMETER Parameter
-	The name of the Parameter to get the value of.
-	For Vault Components, the parameter names accepted are:
-	"DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
-	For Disaster Recovery Components, the parameter names accepted are:
-	"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"
-
 	.PARAMETER Server
 	The name or address of the remote Vault server to target with PARClient
 
@@ -28,6 +21,13 @@ Function Get-PARComponentConfig {
 
 	.PARAMETER Component
 	The name of the component to query. Vault or PADR are the accepted values
+
+	.PARAMETER Parameter
+	The name of the Parameter to get the value of.
+	For Vault Components, the valid parameter names are:
+	"DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
+	For Disaster Recovery Components, the valid parameter names are:
+	"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"
 
 	.EXAMPLE
 	Get-PARComponentConfig -Server EPV1 -Credential $credential -Component Vault -Parameter DebugLevel
