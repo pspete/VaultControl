@@ -6,15 +6,6 @@ Function Get-PARComponentLog {
 	.DESCRIPTION
 	Gets events from logs for remote Vault, PADR, CVM or ENE.
 
-	DYNAMICPARAMETER LogFile
-	For ENE & CVM Logs, the log file to return must be specified. Accepted values are "Console" or "Trace"
-
-	DYNAMICPARAMETER TimeFrom
-	For Vault or PADR log queries, optionally provide a datetime from which to return the logs from.
-
-	DYNAMICPARAMETER Lines
-	For Vault log queries, optionally provide the number of log lines to return.
-
 	.PARAMETER Server
 	The name or address of the remote Vault server to target with PARClient
 
@@ -30,6 +21,15 @@ Function Get-PARComponentLog {
 
 	.PARAMETER Component
 	The name of the component to query. Vault, PADR, CVM or ENE are the accepted values
+
+	.PARAMETER LogFile
+	For ENE & CVM Logs, the log file to return must be specified. Accepted values are "Console" or "Trace"
+
+	.PARAMETER TimeFrom
+	For Vault or PADR log queries, optionally provide a datetime from which to return the logs from.
+
+	.PARAMETER Lines
+	For Vault log queries, optionally provide the number of log lines to return.
 
 	.EXAMPLE
 	Get-PARComponentLog -Server EPV1 -Password $SecureString -Component Vault -TimeFrom (Get-Date).AddDays(-1)
@@ -82,35 +82,27 @@ Function Get-PARComponentLog {
 			ValueFromPipelineByPropertyName = $true
 		)]
 		[ValidateSet("Vault", "PADR", "ENE", "CVM")]
-		[string]$Component
+		[string]$Component,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true
+		)]
+		[ValidateSet("Console", "Trace")]
+		[string]$LogFile = "Console",
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true
+		)]
+		[datetime]$TimeFrom,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true
+		)]
+		[int]$Lines
 	)
-
-	DynamicParam {
-
-		#Create a RuntimeDefinedParameterDictionary
-		$Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-
-		if(($Component -eq "ENE") -or ($Component -eq "CVM")) {
-
-			New-DynamicParam -Name LogFile -Type String -ValidateSet "Console", "Trace" -Mandatory -ValueFromPipelineByPropertyName -DPDictionary $Dictionary
-
-		}
-
-		if(($Component -eq "VAULT") -or ($Component -eq "PADR")) {
-
-			New-DynamicParam -Name TimeFrom -Type datetime -ValueFromPipelineByPropertyName -DPDictionary $Dictionary
-
-		}
-
-		if($Component -eq "VAULT") {
-
-			New-DynamicParam -Name Lines -Type Int -ValueFromPipelineByPropertyName -DPDictionary $Dictionary
-
-		}
-
-		$Dictionary
-
-	}
 
 	Begin {
 
@@ -125,20 +117,28 @@ Function Get-PARComponentLog {
 
 		$Command = "GetLog $Component"
 
-		if($PSBoundParameters.ContainsKey("TimeFrom")) {
+		if(($Component -eq "VAULT") -or ($Component -eq "PADR")) {
 
-			$DateStamp = (Get-Date $($PSBoundParameters["TimeFrom"]) -Format ddMMyyyy:HHmm)
-			$Command = "$Command /TimeFrom $DateStamp"
+			if($PSBoundParameters.ContainsKey("TimeFrom")) {
 
-		}
+				$DateStamp = (Get-Date $($PSBoundParameters["TimeFrom"]) -Format ddMMyyyy:HHmm)
+				$Command = "$Command /TimeFrom $DateStamp"
 
-		if($PSBoundParameters.ContainsKey("Lines")) {
-
-			$Command = "$Command /Lines $($PSBoundParameters["Lines"])"
+			}
 
 		}
 
-		if($PSBoundParameters.ContainsKey("LogFile")) {
+		if($Component -eq "VAULT") {
+
+			if($PSBoundParameters.ContainsKey("Lines")) {
+
+				$Command = "$Command /Lines $($PSBoundParameters["Lines"])"
+
+			}
+
+		}
+
+		if(($Component -eq "ENE") -or ($Component -eq "CVM")) {
 
 			$Command = "$Command /LogFile $($PSBoundParameters["LogFile"])"
 
@@ -166,7 +166,7 @@ Function Get-PARComponentLog {
 
 			}
 
-			"default" {$Pattern = '(.+)'; break}
+			default {$Pattern = '(.+)'; break}
 
 		}
 

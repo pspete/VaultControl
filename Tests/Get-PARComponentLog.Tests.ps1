@@ -113,19 +113,96 @@ Describe $FunctionName {
 
 			}
 
-			It "reports returned event time" -Pending {
+			It "sends correct format of timefrom" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "PADR"
+					PassFile  = (Join-Path $pwd "README.md")
+					TimeFrom  = (Get-Date 01/01/1970)
+				}
+
+				$InputObj | Get-PARComponentLog
+
+				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+
+					$CommandParameters -eq "GetLog PADR /TimeFrom 01011970:0000"
+
+				} -Times 1 -Exactly -Scope It
+
+			}
+
+			It "sends correct format of lines" {
 
 				$InputObj = [pscustomobject]@{
 					Server    = "SomeServer"
 					Component = "Vault"
-					TimeFrom  = (Get-Date 01/01/1970)
+					PassFile  = (Join-Path $pwd "README.md")
+					Lines     = 66
 				}
 
-				$InputObj | Get-PARComponentLog -TimeFrom $(Get-Date 01/01/1970) -Verbose | Select-Object -ExpandProperty Time | Should Be "04/05/2018 16:01:40"
+				$InputObj | Get-PARComponentLog
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {
 
-					$CommandParameters -eq "GetLog Vault /TimeFrom 01011970:0000"
+					$CommandParameters -eq "GetLog Vault /Lines 66"
+
+				} -Times 1 -Exactly -Scope It
+
+			}
+
+			It "sends correct command format for console logfile" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "ENE"
+					PassFile  = (Join-Path $pwd "README.md")
+					LogFile   = "Console"
+				}
+
+				$InputObj | Get-PARComponentLog
+
+				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+
+					$CommandParameters -eq "GetLog ENE /LogFile Console"
+
+				} -Times 1 -Exactly -Scope It
+
+			}
+
+			It "sends correct command format for trace logfile" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "ENE"
+					PassFile  = (Join-Path $pwd "README.md")
+					LogFile   = "Trace"
+				}
+
+				$InputObj | Get-PARComponentLog
+
+				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+
+					$CommandParameters -eq "GetLog ENE /LogFile Trace"
+
+				} -Times 1 -Exactly -Scope It
+
+			}
+
+			It "has placeholder logic for cvm" {
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "CVM"
+					PassFile  = (Join-Path $pwd "README.md")
+					LogFile   = "Trace"
+				}
+
+				$InputObj | Get-PARComponentLog
+
+				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+
+					$CommandParameters -eq "GetLog CVM /LogFile Trace"
 
 				} -Times 1 -Exactly -Scope It
 
