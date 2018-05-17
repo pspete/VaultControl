@@ -2,12 +2,10 @@
 
 	<#
     .SYNOPSIS
-	Executes specified PARClient command and arguments
+	Defines specified PARClient command and arguments
 
     .DESCRIPTION
-	Designed to start PARClient process with arguments required for specific command.
-
-	Returns Object containing ExitCode, StdOut & StdErr
+	Defines a PARClient process object with arguments required for specific command.
 
 	.PARAMETER PARClient
 	The Path to PARClient.exe.
@@ -54,7 +52,6 @@
 			Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True
 		)]
-		[ValidateScript( {Test-Path $_})]
 		[string]$PARClient = $Script:PAR.ClientPath,
 
 		[Parameter(
@@ -81,7 +78,6 @@
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "Credential"
 		)]
-		[ValidateNotNullOrEmpty]
 		[pscredential]$Credential,
 
 		[Parameter(
@@ -176,26 +172,7 @@
 			$Process.StartInfo.WindowStyle = "hidden"
 
 			#Start Process
-			$Process.start() | Out-Null
-
-			#Read Output Stream First
-			$StdOut = $Process.StandardOutput.ReadToEnd()
-			$StdErr = $Process.StandardError.ReadToEnd()
-
-			#If you wait for the process to exit before reading StandardOutput
-			#the process can block trying to write to it, so the process never ends.
-			$Process.WaitForExit()
-
-			Write-Debug "Exit Code: $($Process.ExitCode)"
-
-			[PSCustomObject] @{
-
-				"ExitCode" = $Process.ExitCode
-				"StdOut"   = $StdOut
-				"StdErr"   = $StdErr
-				"Server"   = $Server.ToUpper()
-
-			}
+			Start-PARClientProcess -Process $Process
 
 		}
 

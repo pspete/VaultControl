@@ -79,7 +79,7 @@ Function Get-PARComponent {
 				'running' {$Status = "Running"; break}
 				'starting' {$Status = "Starting"; break}
 				'stopped' {$Status = "Stopped"; break}
-				"default" {$Status = $Result.StdOut; break}
+				default {$Status = $Result.StdOut; break}
 
 			}
 

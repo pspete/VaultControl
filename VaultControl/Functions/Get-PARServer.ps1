@@ -74,7 +74,11 @@ Function Get-PARServer {
 
 		$Components = Invoke-PARClient @PSBoundParameters
 
-		$CPU = ($CPU.StdOut  | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+		If($CPU) {
+
+			$CPU = ($CPU.StdOut  | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+
+		}
 
 		If($Disk) {
 

@@ -47,7 +47,7 @@ Describe $FunctionName {
 
 				param($Parameter)
 
-				(Get-Command Get-PARComponent).Parameters["$Parameter"].Attributes.Mandatory | Should Be $true
+				(Get-Command Get-PARComponentConfig).Parameters["$Parameter"].Attributes.Mandatory | Should Be $true
 
 			}
 
@@ -65,13 +65,14 @@ Describe $FunctionName {
 					Server    = "SomeServer"
 					Component = "Vault"
 					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Parameter = "DebugLevel"
 				}
 
 			}
 
 			It "executes command" {
 
-				$InputObj | Get-PARComponent -verbose
+				$InputObj | Get-PARComponentConfig -verbose
 
 				Assert-MockCalled Invoke-PARClient -Times 1 -Exactly -Scope It
 
@@ -79,83 +80,57 @@ Describe $FunctionName {
 
 			It "executes command with expected parameters" {
 
-				$InputObj | Get-PARComponent -verbose
+				$InputObj | Get-PARComponentConfig
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {
 
-					$CommandParameters -eq "Status Vault"
+					$CommandParameters -eq "GetParm Vault DebugLevel"
 
 				} -Times 1 -Exactly -Scope It
 
 			}
 
-			It "does not throw if no result on StdOut" {
+			It "reports returned value status" {
 
-				{$InputObj | Get-PARComponent -Verbose} | Should Not throw
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "DebugLevel=PE(1),PERF(1)"}
+				}
+
+				$InputObj | Get-PARComponentConfig | Select-Object -ExpandProperty Value | Should Be "PE(1),PERF(1)"
 
 			}
 
-			It "reports running status" {
-
-				$InputObj = [pscustomobject]@{
-					Server    = "SomeServer"
-					Component = "Vault"
-					PassFile  = (Join-Path $pwd "README.md")
-				}
+			It "reports returned value status" {
 
 				Mock Invoke-PARClient -MockWith {
-					Write-Output @{"StdOut" = "The vault service is running"}
+					Write-Output @{"StdOut" = "DebugLevel"}
 				}
 
-				$InputObj | Get-PARComponent -Verbose | Select-Object -ExpandProperty Status | Should Be "Running"
+				$InputObj | Get-PARComponentConfig | Select-Object -ExpandProperty Value | Should Be "DebugLevel"
 
 			}
 
-			It "reports starting status" {
-
+			It "throws if invalid vault parameter specified" {
 				$InputObj = [pscustomobject]@{
 					Server    = "SomeServer"
 					Component = "Vault"
-					PassFile  = (Join-Path $pwd "README.md")
+					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Parameter = "FailoverMode"
 				}
 
-				Mock Invoke-PARClient -MockWith {
-					Write-Output @{"StdOut" = "The vault service is starting"}
-				}
-
-				$InputObj | Get-PARComponent -Verbose | Select-Object -ExpandProperty Status | Should Be "Starting"
+				{$InputObj | Get-PARComponentConfig} | Should throw
 
 			}
 
-			It "reports stopped status" {
-
+			It "throws if invalid PADR parameter specified" {
 				$InputObj = [pscustomobject]@{
 					Server    = "SomeServer"
-					Component = "Vault"
-					PassFile  = (Join-Path $pwd "README.md")
+					Component = "PADR"
+					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Parameter = "DebugLevel"
 				}
 
-				Mock Invoke-PARClient -MockWith {
-					Write-Output @{"StdOut" = "The vault service is stopped"}
-				}
-
-				$InputObj | Get-PARComponent -Verbose | Select-Object -ExpandProperty Status | Should Be "Stopped"
-
-			}
-
-			It "reports unknown status in full" {
-
-				$InputObj = [pscustomobject]@{
-					Server    = "SomeServer"
-					Component = "Vault"
-					PassFile  = (Join-Path $pwd "README.md")
-				}
-
-				Mock Invoke-PARClient -MockWith {
-					@{"StdOut" = "The vault said something else"}
-				}
-
-				$InputObj | Get-PARComponent -Verbose | Select-Object -ExpandProperty Status | Should Be "The vault said something else"
+				{$InputObj | Get-PARComponentConfig} | Should throw
 
 			}
 

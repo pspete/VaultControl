@@ -6,13 +6,6 @@ Function Get-PARComponentConfig {
 	.DESCRIPTION
 	Queries remote vault server for values contained in component configuration files DBPARM.ini or PADR.ini.
 
-	DYNAMICPARAMETER Parameter
-	The name of the Parameter to get the value of.
-	For Vault Components, the parameter names accepted are:
-	"DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
-	For Disaster Recovery Components, the parameter names accepted are:
-	"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"
-
 	.PARAMETER Server
 	The name or address of the remote Vault server to target with PARClient
 
@@ -28,6 +21,13 @@ Function Get-PARComponentConfig {
 
 	.PARAMETER Component
 	The name of the component to query. Vault or PADR are the accepted values
+
+	.PARAMETER Parameter
+	The name of the Parameter to get the value of.
+	For Vault Components, the valid parameter names are:
+	"DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
+	For Disaster Recovery Components, the valid parameter names are:
+	"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"
 
 	.EXAMPLE
 	Get-PARComponentConfig -Server EPV1 -Credential $credential -Component Vault -Parameter DebugLevel
@@ -61,7 +61,6 @@ Function Get-PARComponentConfig {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
 		[string]$PassFile,
 
 		[Parameter(
@@ -69,36 +68,32 @@ Function Get-PARComponentConfig {
 			ValueFromPipelineByPropertyName = $true
 		)]
 		[ValidateSet("Vault", "PADR")]
-		[string]$Component
+		[string]$Component,
+
+		[Parameter(
+			Mandatory = $true,
+			ValueFromPipelineByPropertyName = $true
+		)]
+		[ValidateSet("DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling",
+			"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode")]
+		[string]$Parameter
 
 	)
 
-	DynamicParam {
-
-		#Create a RuntimeDefinedParameterDictionary
-		$Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-
-		if($Component -eq "VAULT") {
-
-			New-DynamicParam -Name Parameter -Type String -Mandatory -ValueFromPipelineByPropertyName `
-				-ValidateSet "DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling" `
-				-DPDictionary $Dictionary
-
-		}
-
-		if($Component -eq "PADR") {
-
-			New-DynamicParam -Name Parameter -Type String -Mandatory -ValueFromPipelineByPropertyName `
-				-ValidateSet "EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode" `
-				-DPDictionary $Dictionary
-
-		}
-
-		$Dictionary
-
+	Begin {
+		$VaultSet = "DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
+		$PADRSet = "EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"
 	}
-
 	Process {
+
+		Switch($Component) {
+			"Vault" {
+				If($VaultSet -notcontains $Parameter) {throw "Not a valid DBPARM.ini Parameter"}
+			}
+			"PADR" {
+				If($PADRSet -notcontains $Parameter) {throw "Not a valid PADR.ini Parameter"}
+			}
+		}
 
 		$PSBoundParameters.Add("CommandParameters", "GetParm $Component $($PSBoundParameters["Parameter"])")
 
@@ -108,11 +103,7 @@ Function Get-PARComponentConfig {
 
 			If($Result.StdOut -match "=") {
 
-				Try {
-
-					$Value = ($Result.StdOut).Split("=")[1]
-
-				} Catch {$Value = $Result.StdOut}
+				$Value = ($Result.StdOut).Split("=")[1]
 
 			} Else {$Value = $Result.StdOut}
 
