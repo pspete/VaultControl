@@ -61,7 +61,6 @@ Function Get-PARComponentConfig {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
 		[string]$PassFile,
 
 		[Parameter(
@@ -69,36 +68,32 @@ Function Get-PARComponentConfig {
 			ValueFromPipelineByPropertyName = $true
 		)]
 		[ValidateSet("Vault", "PADR")]
-		[string]$Component
+		[string]$Component,
+
+		[Parameter(
+			Mandatory = $true,
+			ValueFromPipelineByPropertyName = $true
+		)]
+		[ValidateSet("DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling",
+			"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode")]
+		[string]$Parameter
 
 	)
 
-	DynamicParam {
-
-		#Create a RuntimeDefinedParameterDictionary
-		$Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-
-		if($Component -eq "Vault") {
-
-			New-DynamicParam -Name Parameter -Mandatory -ValueFromPipelineByPropertyName `
-				-ValidateSet "DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling" `
-				-DPDictionary $Dictionary
-
-		}
-
-		if($Component -eq "PADR") {
-
-			New-DynamicParam -Name Parameter -Mandatory -ValueFromPipelineByPropertyName `
-				-ValidateSet "EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode" `
-				-DPDictionary $Dictionary
-
-		}
-
-		$Dictionary
-
+	Begin {
+		$VaultSet = "DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
+		$PADRSet = "EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"
 	}
-
 	Process {
+
+		Switch($Component) {
+			"Vault" {
+				If($VaultSet -notcontains $Parameter) {throw "Not a valid DBPARM.ini Parameter"}
+			}
+			"PADR" {
+				If($PADRSet -notcontains $Parameter) {throw "Not a valid PADR.ini Parameter"}
+			}
+		}
 
 		$PSBoundParameters.Add("CommandParameters", "GetParm $Component $($PSBoundParameters["Parameter"])")
 
@@ -108,11 +103,7 @@ Function Get-PARComponentConfig {
 
 			If($Result.StdOut -match "=") {
 
-				Try {
-
-					$Value = ($Result.StdOut).Split("=")[1]
-
-				} Catch {$Value = $Result.StdOut}
+				$Value = ($Result.StdOut).Split("=")[1]
 
 			} Else {$Value = $Result.StdOut}
 

@@ -65,6 +65,7 @@ Describe $FunctionName {
 					Server    = "SomeServer"
 					Component = "Vault"
 					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Parameter = "DebugLevel"
 				}
 
 			}
@@ -77,31 +78,59 @@ Describe $FunctionName {
 
 			}
 
-			It "executes command with expected parameters" -Pending {
+			It "executes command with expected parameters" {
 
-				$InputObj | Get-PARComponentConfig -verbose
+				$InputObj | Get-PARComponentConfig
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {
 
-					$CommandParameters -eq "GetParm Vault"
+					$CommandParameters -eq "GetParm Vault DebugLevel"
 
 				} -Times 1 -Exactly -Scope It
 
 			}
 
-			It "reports returned value status" -Pending {
-
-				$InputObj = [pscustomobject]@{
-					Server    = "SomeServer"
-					Component = "Vault"
-					PassFile  = (Join-Path $pwd "README.md")
-				}
+			It "reports returned value status" {
 
 				Mock Invoke-PARClient -MockWith {
 					Write-Output @{"StdOut" = "DebugLevel=PE(1),PERF(1)"}
 				}
 
-				$InputObj | Get-PARComponentConfig -Parameter DebugLevel -Verbose | Select-Object -ExpandProperty Value | Should Be "PE(1),PERF(1)"
+				$InputObj | Get-PARComponentConfig | Select-Object -ExpandProperty Value | Should Be "PE(1),PERF(1)"
+
+			}
+
+			It "reports returned value status" {
+
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "DebugLevel"}
+				}
+
+				$InputObj | Get-PARComponentConfig | Select-Object -ExpandProperty Value | Should Be "DebugLevel"
+
+			}
+
+			It "throws if invalid vault parameter specified" {
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Parameter = "FailoverMode"
+				}
+
+				{$InputObj | Get-PARComponentConfig} | Should throw
+
+			}
+
+			It "throws if invalid PADR parameter specified" {
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "PADR"
+					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Parameter = "DebugLevel"
+				}
+
+				{$InputObj | Get-PARComponentConfig} | Should throw
 
 			}
 
