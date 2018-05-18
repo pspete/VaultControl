@@ -51,7 +51,6 @@ Function Get-PARServer {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
 		[string]$PassFile
 
 	)
