@@ -58,7 +58,7 @@ Describe $FunctionName {
 			BeforeEach {
 
 				Mock Invoke-PARClient -MockWith {
-					Write-Output @{}
+
 				}
 
 				$InputObj = [pscustomobject]@{
@@ -80,7 +80,7 @@ Describe $FunctionName {
 
 			}
 
-			It "executes command with expected parameters" -Pending {
+			It "executes command with expected parameters" {
 
 				$InputObj | Set-PARComponentConfig -verbose
 
@@ -95,7 +95,34 @@ Describe $FunctionName {
 
 		Context "Output" {
 
+			BeforeEach {
 
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "Something Something Success Something"}
+				}
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Parameter = "DefaultTimeout"
+					Value     = "SomeValue"
+					Mode      = "Temporary"
+				}
+
+			}
+
+			It "reports success" {
+				$InputObj | Set-PARComponentConfig | Select-Object -ExpandProperty Status | Should Be "Success"
+			}
+
+			It "reports failure" {
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "Something Something extremely bad error"}
+				}
+
+				$InputObj | Set-PARComponentConfig | Select-Object -ExpandProperty Status | Should Be "Error"
+			}
 
 		}
 
