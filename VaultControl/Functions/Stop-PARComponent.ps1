@@ -6,9 +6,6 @@ Function Stop-PARComponent {
 	.DESCRIPTION
 	Stops a running Vault, CVM, PADR or ENE component on a remote server
 
-	DYNAMICPARAMETER ShutdownMode
-	Specify "Normal", "Immediate" or "Terminate" shutdown mode for stop operation against Vault service.
-
 	.PARAMETER Server
 	The name or address of the remote Vault server to target with PARClient
 
@@ -23,7 +20,10 @@ Function Stop-PARComponent {
 	operations via PARClient
 
 	.PARAMETER Component
-	The name of the component to query. Vault, PADR, CVM or ENE are the accepted values
+	The name of the component to query. Vault, PADR, CVM or ENE are the accepted values.
+
+	.PARAMETER ShutdownMode
+	Specify "Normal", "Immediate" or "Terminate" shutdown mode for stop operation against Vault service.
 
 	.EXAMPLE
 	Stop-PARComponent -Server EPV1 -Component Vault
@@ -68,7 +68,6 @@ Function Stop-PARComponent {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
 		[string]$PassFile,
 
 		[Parameter(
@@ -76,31 +75,27 @@ Function Stop-PARComponent {
 			ValueFromPipelineByPropertyName = $true
 		)]
 		[ValidateSet("Vault", "PADR", "ENE", "CVM")]
-		[string]$Component
+		[string]$Component,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $true
+		)]
+		[ValidateSet("Normal", "Immediate", "Terminate")]
+		[string]$ShutdownMode
 	)
-
-	DynamicParam {
-
-		#Create a RuntimeDefinedParameterDictionary
-		$Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-
-		if($Component -eq "VAULT") {
-
-			New-DynamicParam -Name ShutdownMode -Type String -ValidateSet "Normal", "Immediate", "Terminate" -ValueFromPipelineByPropertyName -DPDictionary $Dictionary
-
-		}
-
-		$Dictionary
-
-	}
 
 	Process {
 
 		$Command = "Stop $Component"
 
-		if($PSBoundParameters.ContainsKey("ShutdownMode")) {
+		If($Component -eq "Vault") {
 
-			$Command = "$Command /$($PSBoundParameters["ShutdownMode"])"
+			if($PSBoundParameters.ContainsKey("ShutdownMode")) {
+
+				$Command = "$Command /$($PSBoundParameters["ShutdownMode"])"
+
+			}
 
 		}
 

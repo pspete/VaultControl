@@ -62,9 +62,10 @@ Describe $FunctionName {
 				}
 
 				$InputObj = [pscustomobject]@{
-					Server    = "SomeServer"
-					Component = "Vault"
-					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Server       = "SomeServer"
+					Component    = "Vault"
+					Password     = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					ShutdownMode = "Terminate"
 				}
 
 			}
@@ -83,7 +84,7 @@ Describe $FunctionName {
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {
 
-					$CommandParameters -eq "Stop Vault"
+					$CommandParameters -eq "Stop Vault /Terminate"
 
 				} -Times 1 -Exactly -Scope It
 			}
@@ -92,10 +93,41 @@ Describe $FunctionName {
 
 		Context "Output" {
 
+			BeforeEach {
 
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "Huge Massive Big Ugly error"}
+				}
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+				}
+
+			}
+
+			It "reports failure" {
+				$DebugPreference = "Continue"
+				$Output = $InputObj | Stop-PARComponent
+
+				$Output.Status | Should Be "Error"
+
+			}
+
+			It "reports success" {
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "something stopped something"}
+				}
+				$Output = $InputObj | Stop-PARComponent
+
+				$Output.Status | Should Be "Stopped"
+
+			}
 
 		}
 
 	}
 
 }
+
