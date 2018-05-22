@@ -27,7 +27,7 @@
 	param(
 
 		[Parameter(
-			Mandatory = $False,
+			Mandatory = $True,
 			ValueFromPipelineByPropertyName = $True
 		)]
 		[System.Diagnostics.Process]$Process

@@ -71,7 +71,7 @@ Describe $FunctionName {
 
 			It "executes command" {
 
-				$InputObj | Start-PARComponent -verbose
+				$InputObj | Start-PARComponent
 
 				Assert-MockCalled Invoke-PARClient -Times 1 -Exactly -Scope It
 
@@ -79,11 +79,11 @@ Describe $FunctionName {
 
 			It "executes command with expected parameters" {
 
-				$InputObj | Start-PARComponent -verbose
+				$InputObj | Start-PARComponent -Last
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {
 
-					$CommandParameters -eq "Start Vault"
+					$CommandParameters -eq "Start Vault /Last"
 
 				} -Times 1 -Exactly -Scope It
 			}
@@ -92,7 +92,37 @@ Describe $FunctionName {
 
 		Context "Output" {
 
+			BeforeEach {
 
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "Huge Massive Big Ugly error"}
+				}
+
+				$InputObj = [pscustomobject]@{
+					Server    = "SomeServer"
+					Component = "Vault"
+					Password  = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+				}
+
+			}
+
+			It "reports failure" {
+				$DebugPreference = "Continue"
+				$Output = $InputObj | Start-PARComponent
+
+				$Output.Status | Should Be "Error"
+
+			}
+
+			It "reports success" {
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{"StdOut" = "well that started something"}
+				}
+				$Output = $InputObj | Start-PARComponent
+
+				$Output.Status | Should Be "Started"
+
+			}
 
 		}
 

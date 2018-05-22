@@ -22,6 +22,9 @@ Function Start-PARComponent {
 	.PARAMETER Component
 	The name of the component to query. Vault, PADR, CVM or ENE are the accepted values
 
+	.PARAMETER Last
+	For the Vault component, start with the last known good configuration.
+
 	.EXAMPLE
 	Start-PARComponent -Server EPV1 -Component Vault
 
@@ -65,7 +68,6 @@ Function Start-PARComponent {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
 		[string]$PassFile,
 
 		[Parameter(
@@ -73,31 +75,26 @@ Function Start-PARComponent {
 			ValueFromPipelineByPropertyName = $true
 		)]
 		[ValidateSet("Vault", "PADR", "ENE", "CVM")]
-		[string]$Component
+		[string]$Component,
+
+		[Parameter(
+			Mandatory = $false,
+			ValueFromPipelineByPropertyName = $false
+		)]
+		[switch]$Last
 	)
-
-	DynamicParam {
-
-		#Create a RuntimeDefinedParameterDictionary
-		$Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-
-		if($Component -eq "VAULT") {
-
-			New-DynamicParam -Name Last -Type switch -ValueFromPipelineByPropertyName -DPDictionary $Dictionary
-
-		}
-
-		$Dictionary
-
-	}
 
 	Process {
 
 		$Command = "Start $Component"
 
-		if($PSBoundParameters.ContainsKey("Last")) {
+		if($Component -eq "Vault") {
 
-			$Command = "$Command /Last"
+			if($PSBoundParameters.ContainsKey("Last")) {
+
+				$Command = "$Command /Last"
+
+			}
 
 		}
 
