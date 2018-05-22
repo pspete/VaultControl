@@ -54,10 +54,10 @@ Describe $FunctionName {
 
 		Context "Command Execution" {
 
+
 			BeforeEach {
 
 				Mock Invoke-PARClient -MockWith {
-
 				}
 
 				$InputObj = [pscustomobject]@{
@@ -112,6 +112,7 @@ Describe $FunctionName {
 			}
 
 			It "executes List command" {
+
 
 				$InputObj | Get-PARServer -verbose
 

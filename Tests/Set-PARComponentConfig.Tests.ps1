@@ -82,6 +82,7 @@ Describe $FunctionName {
 
 			It "executes command with expected parameters" {
 
+
 				$InputObj | Set-PARComponentConfig -verbose
 
 				Assert-MockCalled Invoke-PARClient -ParameterFilter {

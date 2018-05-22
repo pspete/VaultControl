@@ -62,10 +62,12 @@ Describe $FunctionName {
 				}
 
 				$InputObj = [pscustomobject]@{
+
 					Server       = "SomeServer"
 					Component    = "Vault"
 					Password     = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
 					ShutdownMode = "Terminate"
+
 				}
 
 			}
@@ -130,4 +132,3 @@ Describe $FunctionName {
 	}
 
 }
-
