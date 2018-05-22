@@ -1,5 +1,10 @@
 # VaultControl
 
+[![Build status](https://ci.appveyor.com/api/projects/status/svnyleaaupspfk1q/branch/master?svg=true)](https://ci.appveyor.com/project/pspete/vaultcontrol/branch/master)
+[![AppVeyor tests](https://img.shields.io/appveyor/tests/pspete/vaultcontrol.svg)](https://ci.appveyor.com/project/pspete/vaultcontrol)
+[![Coverage Status](https://coveralls.io/repos/github/pspete/VaultControl/badge.svg)](https://coveralls.io/github/pspete/VaultControl)
+[![license](https://img.shields.io/github/license/pspete/vaultcontrol.svg)](https://github.com/pspete/VaultControl/blob/master/LICENSE.md)
+
 Invoke CyberArk PARClient.exe Utility with PowerShell
 
 **A work in progress - changes probable prior to a Version 1.0 release**
@@ -50,7 +55,7 @@ $env:PSModulePath.split(';')
 
 ```
 
-[Download the ```develop branch```](https://github.com/pspete/VaultControl/archive/develop.zip)
+[Download the ```master``` branch](https://github.com/pspete/VaultControl/archive/master.zip)
 
 Extract the archive
 
