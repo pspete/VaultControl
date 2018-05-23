@@ -73,13 +73,15 @@ Function Get-PARServer {
 
 		$Components = Invoke-PARClient @PSBoundParameters
 
-		If($CPU) {
+		If($CPU.StdOut) {
 
 			$CPU = ($CPU.StdOut  | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
 
 		}
 
-		If($Disk) {
+		Else {$CPU = $null}
+
+		If($Disk.StdOut) {
 
 			$Disk = $Disk.StdOut | Select-String '(.+)' -AllMatches | ForEach-Object {
 
@@ -95,9 +97,9 @@ Function Get-PARServer {
 
 			}
 
-		}
+		} Else {$Disk = $null}
 
-		If($Memory) {
+		If($Memory.StdOut) {
 
 			$Memory = ($Memory.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
 
@@ -118,7 +120,9 @@ Function Get-PARServer {
 
 		}
 
-		If($Components) {
+		Else {$Memory = $null}
+
+		If($Components.StdOut) {
 
 			$Components = ($Components.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
 
@@ -136,6 +140,8 @@ Function Get-PARServer {
 			}
 
 		}
+
+		Else {$Components = $null}
 
 		[PSCustomObject]@{
 
