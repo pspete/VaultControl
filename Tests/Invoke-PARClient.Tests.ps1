@@ -196,9 +196,94 @@ Describe $FunctionName {
 
 		}
 
-		Context "Output" {
+		Context "Reporting Errors" {
+
+			BeforeEach {
+
+				$InputObj = [pscustomobject]@{
+					Server            = "SomeServer"
+					CommandParameters = "Some Command Parameters"
+					Password          = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Port              = 1234
+				}
 
 
+			}
+
+			it "reports 'ErrorCode Message' format errors on stdout" {
+
+				Mock Start-PARClientProcess -MockWith {
+					[pscustomobject]@{
+						"ExitCode" = 0
+						"StdOut"   = "PARCL002S Authentication failure."
+						"StdErr"   = $null
+					}
+
+				}
+
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "Authentication failure."
+
+			}
+
+			it "reports '(ErrorCode) Message' format errors on stdout" {
+
+				Mock Start-PARClientProcess -MockWith {
+					[pscustomobject]@{
+						"ExitCode" = 0
+						"StdOut"   = "ERROR (999) Something Awful."
+						"StdErr"   = $null
+					}
+
+				}
+
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "Something Awful."
+
+			}
+
+			it "reports 'Message (ErrorCode)' format errors on stdout" {
+
+				Mock Start-PARClientProcess -MockWith {
+					[pscustomobject]@{
+						"ExitCode" = 0
+						"StdOut"   = "Cannot get parameter DisableExceptionHandling. (Reason: 7)"
+						"StdErr"   = $null
+					}
+
+				}
+
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "Cannot get parameter DisableExceptionHandling."
+
+			}
+
+		}
+
+		Context "Command Arguments" {
+			Mock Test-Path -MockWith {
+				$true
+			}
+
+			Mock Start-PARClientProcess -MockWith {
+				Write-Output @{}
+			}
+
+			$InputObj = [pscustomobject]@{
+				Server            = "SomeServer"
+				CommandParameters = "Some Command Parameters"
+				Password          = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+				Port              = 1234
+			}
+
+			It "executes command with expected arguments" {
+
+				$InputObj | Invoke-PARClient
+
+				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$Process.StartInfo.Arguments -eq $('SomeServer/SomePassword /Port 1234 /StateFileName ' + $(Join-Path $env:temp "$PID.tmp") + ' /Q /C "Some Command Parameters"')
+
+				}
+
+			}
 
 		}
 

@@ -184,14 +184,14 @@
 				#PARCL002S Authentication failure.
 				Write-Debug "ErrorId: $($Matches[1])"
 				Write-Debug "Message: $($Matches[2])"
-				Write-Error -Message $Matches[2] -ErrorId $Matches[1] -TargetObject $CallStack
+				Write-Error -Message $Matches[2] -ErrorId $Matches[1]
 
 			} ElseIf($Result.StdOut -match '(.+) \((.+: \d)\)') {
 
 				#Cannot get parameter DisableExceptionHandling. (Reason: 7)
 				Write-Debug "ErrorId: $($Matches[2])"
 				Write-Debug "Message: $($Matches[1])"
-				Write-Error -Message $Matches[1] -ErrorId $Matches[2] -TargetObject $CallStack
+				Write-Error -Message $Matches[1] -ErrorId $Matches[2]
 
 			} Else {$Result}
 
