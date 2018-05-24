@@ -1,5 +1,5 @@
 # version format
-version: 0.0.{build}
+version: 0.1.{build}
 
 environment:
   access_token:

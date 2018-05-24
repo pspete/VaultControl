@@ -57,95 +57,109 @@ Function Get-PARServer {
 
 	Process {
 
-		$PSBoundParameters["CommandParameters"] = "GetCPU"
+		Try {
 
-		$CPU = Invoke-PARClient @PSBoundParameters
+			$ErrorActionPreference = "Stop"
 
-		$PSBoundParameters["CommandParameters"] = "GetDiskUsage"
+			$PSBoundParameters["CommandParameters"] = "GetCPU"
 
-		$Disk = Invoke-PARClient @PSBoundParameters
+			$CPU = Invoke-PARClient @PSBoundParameters
 
-		$PSBoundParameters["CommandParameters"] = "GetMemoryUsage"
+			$PSBoundParameters["CommandParameters"] = "GetDiskUsage"
 
-		$Memory = Invoke-PARClient @PSBoundParameters
+			$Disk = Invoke-PARClient @PSBoundParameters
 
-		$PSBoundParameters["CommandParameters"] = "List"
+			$PSBoundParameters["CommandParameters"] = "GetMemoryUsage"
 
-		$Components = Invoke-PARClient @PSBoundParameters
+			$Memory = Invoke-PARClient @PSBoundParameters
 
-		If($CPU) {
+			$PSBoundParameters["CommandParameters"] = "List"
 
-			$CPU = ($CPU.StdOut  | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+			$Components = Invoke-PARClient @PSBoundParameters
 
-		}
 
-		If($Disk) {
 
-			$Disk = $Disk.StdOut | Select-String '(.+)' -AllMatches | ForEach-Object {
+			If($CPU.StdOut) {
 
-				$DiskInfo = $_.Line.Split(" ")
+				$CPU = ($CPU.StdOut  | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
 
-				[PSCustomObject]@{
+			}
 
-					"Drive"     = $DiskInfo[0]
-					"Space(MB)" = ($DiskInfo[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
-					"Used(%)"   = ($DiskInfo[2] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+			Else {$CPU = $null}
+
+			If($Disk.StdOut) {
+
+				$Disk = $Disk.StdOut | Select-String '(.+)' -AllMatches | ForEach-Object {
+
+					$DiskInfo = $_.Line.Split(" ")
+
+					[PSCustomObject]@{
+
+						"Drive"     = $DiskInfo[0]
+						"Space(MB)" = ($DiskInfo[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
+						"Used(%)"   = ($DiskInfo[2] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+
+					}
+
+				}
+
+			} Else {$Disk = $null}
+
+			If($Memory.StdOut) {
+
+				$Memory = ($Memory.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
+
+					$MemoryInfo = $_.Split(":")
+
+					$MemoryData = ($MemoryInfo[1] | Select-String '(\S+)' -AllMatches).Matches.Value
+
+					[PSCustomObject]@{
+
+						"MemoryType" = ($MemoryInfo[0].Split(" "))[0]
+						"Total(K)"   = (($MemoryData[0]).Split("=")[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
+						"Free(K)"    = (($MemoryData[1]).Split("=")[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
+						"Used(%)"    = (($MemoryData[2]).Split("=")[1] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+
+					}
 
 				}
 
 			}
 
-		}
+			Else {$Memory = $null}
 
-		If($Memory) {
+			If($Components.StdOut) {
 
-			$Memory = ($Memory.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
+				$Components = ($Components.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
 
-				$MemoryInfo = $_.Split(":")
+					$Component = $_.Split(" ")
 
-				$MemoryData = ($MemoryInfo[1] | Select-String '(\S+)' -AllMatches).Matches.Value
+					$Version = ($_ | Select-String "(\d+\D\d+\D\d+\D\d+)" -AllMatches).Matches.Value
 
-				[PSCustomObject]@{
+					[PSCustomObject]@{
 
-					"MemoryType" = ($MemoryInfo[0].Split(" "))[0]
-					"Total(K)"   = (($MemoryData[0]).Split("=")[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
-					"Free(K)"    = (($MemoryData[1]).Split("=")[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
-					"Used(%)"    = (($MemoryData[2]).Split("=")[1] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+						Component = $Component[0]
+						Version   = $Version
 
-				}
-
-			}
-
-		}
-
-		If($Components) {
-
-			$Components = ($Components.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
-
-				$Component = $_.Split(" ")
-
-				$Version = ($_ | Select-String "(\d+\D\d+\D\d+\D\d+)" -AllMatches).Matches.Value
-
-				[PSCustomObject]@{
-
-					Component = $Component[0]
-					Version   = $Version
+					}
 
 				}
 
 			}
 
-		}
+			Else {$Components = $null}
 
-		[PSCustomObject]@{
+			[PSCustomObject]@{
 
-			"Server"     = $Server.ToUpper()
-			"CPU(%)"     = $CPU
-			"Disk"       = $Disk
-			"Memory"     = $Memory
-			"Components" = $Components
+				"Server"     = $Server.ToUpper()
+				"CPU(%)"     = $CPU
+				"Disk"       = $Disk
+				"Memory"     = $Memory
+				"Components" = $Components
 
-		}
+			}
+
+		} Catch {throw $_}
 
 	}
 

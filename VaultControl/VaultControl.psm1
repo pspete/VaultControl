@@ -39,7 +39,9 @@ ForEach-Object {
 }
 
 #Read config and make available in script scope
-If(Test-Path "$env:HOMEDRIVE$env:HomePath\PARConfiguration.xml") {
-	$config = Import-Clixml -Path "$env:HOMEDRIVE$env:HomePath\PARConfiguration.xml"
+$ConfigFile = "$env:HOMEDRIVE$env:HomePath\PARConfiguration.xml"
+If(Test-Path $ConfigFile) {
+	Write-Verbose "Importing Settings: $ConfigFile"
+	$config = Import-Clixml -Path $ConfigFile
 	Set-Variable -Name PAR -Value $config -Scope Script
 }

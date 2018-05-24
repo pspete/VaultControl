@@ -105,7 +105,7 @@ Function Stop-PARComponent {
 
 		If($Result.StdOut) {
 
-			Write-Debug "Status: $Result"
+			Write-Debug "Status: $($Result.StdOut)"
 			$Service = ($Result.StdOut | Select-String '(stopped|Error)' -AllMatches)
 
 			[PSCustomObject]@{
