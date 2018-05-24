@@ -52,6 +52,43 @@ Describe $FunctionName {
 
 		}
 
+		Context "Error Actions" {
+
+			BeforeEach {
+
+				Mock Invoke-PARClient -MockWith {
+					write-Error "some error"
+				}
+
+				$InputObj = [pscustomobject]@{
+					Server   = "SomeServer"
+					Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+				}
+
+			}
+
+			It "stops on error" {
+
+				try {
+					$InputObj | Get-PARServer
+				} catch {"catch test exception"}
+				Finally {
+					Assert-MockCalled Invoke-PARClient -Times 1 -Exactly -Scope It
+				}
+			}
+
+			It "outputs no object on error" {
+
+				try {
+					$Result = $InputObj | Get-PARServer
+				} catch {"catch test exception"}
+				Finally {
+					$Result | Should BeNullOrEmpty
+				}
+			}
+
+		}
+
 		Context "Command Execution" {
 
 
