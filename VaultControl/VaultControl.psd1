@@ -4,7 +4,7 @@
 	RootModule        = 'VaultControl.psm1'
 
 	# Version number of this module.
-	ModuleVersion     = '0.0.1'
+	ModuleVersion     = '0.2.0'
 
 	# ID used to uniquely identify this module
 	GUID              = 'fba9035e-5d32-4a7f-ab91-5658c84e0668'
