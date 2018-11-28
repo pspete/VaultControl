@@ -55,7 +55,7 @@ Function Get-PARComponent {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
+		[ValidateScript( {Test-Path $_ -PathType Leaf})]
 		[string]$PassFile,
 
 		[Parameter(

@@ -52,7 +52,7 @@ Function Restart-PARServer {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
+		[ValidateScript( {Test-Path $_ -PathType Leaf})]
 		[string]$PassFile
 
 	)

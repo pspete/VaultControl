@@ -60,7 +60,7 @@ Function Get-PARService {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
+		[ValidateScript( {Test-Path $_ -PathType Leaf})]
 		[string]$PassFile,
 
 		[Parameter(
