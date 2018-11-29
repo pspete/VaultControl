@@ -52,7 +52,7 @@
 	#TypesToProcess    = @()
 
 	# Format files (.ps1xml) to be loaded when importing this module
-	#FormatsToProcess  = @()
+	FormatsToProcess  = @('VaultControl.Formats.ps1xml')
 
 	# Functions to export from this module
 	FunctionsToExport = @(
