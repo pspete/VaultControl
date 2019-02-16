@@ -117,7 +117,7 @@ Function Get-PARServerLog {
 					"EventType"          = ($_.Groups[5].Value).Trim()
 					"Description"        = ($_.Groups[6].Value).Trim()
 
-				}
+				} | Add-ObjectDetail -typename VaultControl.Log.Server
 
 			}
 
