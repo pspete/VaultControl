@@ -19,7 +19,7 @@
 	Copyright         = '(c) 2018 Pete Maan. All rights reserved.'
 
 	# Description of the functionality provided by this module
-	Description       = 'Invoke CyberArk PARClient.exe Utility with PowerShell'
+	Description       = 'Invoke CyberArk PARClient.exe Utility Commands with PowerShell'
 
 	# Minimum version of the Windows PowerShell engine required by this module
 	PowerShellVersion = '3.0'
