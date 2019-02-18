@@ -1,20 +1,28 @@
 # VaultControl
 
-[![Build status](https://ci.appveyor.com/api/projects/status/svnyleaaupspfk1q/branch/master?svg=true)](https://ci.appveyor.com/project/pspete/vaultcontrol/branch/master)
-[![AppVeyor tests](https://img.shields.io/appveyor/tests/pspete/vaultcontrol.svg)](https://ci.appveyor.com/project/pspete/vaultcontrol)
-[![Coverage Status](https://coveralls.io/repos/github/pspete/VaultControl/badge.svg)](https://coveralls.io/github/pspete/VaultControl)
-[![license](https://img.shields.io/github/license/pspete/vaultcontrol.svg)](https://github.com/pspete/VaultControl/blob/master/LICENSE.md)
+[![appveyor][]][av-site]
+[![tests][]][tests-site]
+[![coveralls][]][cv-site]
+[![psgallery][]][ps-site]
+[![license][]][license-link]
 
-Invoke CyberArk PARClient.exe Utility with PowerShell
+[appveyor]:https://ci.appveyor.com/api/projects/status/svnyleaaupspfk1q/branch/master?svg=true
+[av-site]:https://ci.appveyor.com/project/pspete/vaultcontrol/branch/master
+[tests]:https://img.shields.io/appveyor/tests/pspete/vaultcontrol.svg
+[tests-site]:https://ci.appveyor.com/project/pspete/vaultcontrol
+[coveralls]:https://coveralls.io/repos/github/pspete/VaultControl/badge.svg
+[cv-site]:https://coveralls.io/github/pspete/VaultControl
+[psgallery]:https://img.shields.io/powershellgallery/v/VaultControl.svg
+[ps-site]:https://www.powershellgallery.com/packages/VaultControl
+[license]:https://img.shields.io/github/license/pspete/vaultcontrol.svg
+[license-link]:https://github.com/pspete/VaultControl/blob/master/LICENSE.md
 
-**A work in progress - changes probable prior to a Version 1.0 release**
-
-Feedback, Issues and Pull Requests are more than welcome.
+Invoke CyberArk PARClient.exe Utility Commands with PowerShell
 
 ## Getting Started
 
 - `import-module VaultControl`
-- Run `Set-PARConfiguration` to set the path to the `PARClient.exe` utility and any non-default port used for PARClient operations.
+- Run `Set-PARConfiguration` to set the path to the `PARClient.exe` utility on your computer, and any non-default port used for PARClient operations.
 
 ### List of Commands
 
@@ -37,15 +45,29 @@ Feedback, Issues and Pull Requests are more than welcome.
 
 - Requires Powershell v3 (minimum)
 - CyberArk PARClient.exe utility
-- CyberArk Vault/PADR/ENE
+- CyberArk Vault/PADR/ENE with which to interact
 
 ### Install Options
 
 This repository contains a folder named ```VaultControl```.
 
-The folder needs to be copied to one of your PowerShell Module Directories.
+The folder and it's contents needs to be present in one of your PowerShell Module Directories.
 
-#### Manual Install
+Use one of the following methods:
+
+#### Option 1: Install from PowerShell Gallery
+
+Download the module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/VaultControl/).
+
+- PowerShell 5.0 or above required.
+
+From a PowerShell prompt, run:
+
+````powershell
+Install-Module -Name psPAS -Scope CurrentUser
+````
+
+#### Option 2: Manual Install
 
 Find your PowerShell Module Paths with the following command:
 
@@ -60,3 +82,19 @@ $env:PSModulePath.split(';')
 Extract the archive
 
 Copy the ```VaultControl``` folder to your "Powershell Modules" directory of choice.
+
+## Changelog
+
+All notable changes to this project will be documented in the [Changelog](CHANGELOG.md)
+
+## Author
+
+- **Pete Maan** - [pspete](https://github.com/pspete)
+
+## License
+
+This project is [licensed under the MIT License](LICENSE.md).
+
+## Contributing
+
+Feedback, Issues and Pull Requests are encouraged.
