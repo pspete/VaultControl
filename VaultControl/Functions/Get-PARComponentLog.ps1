@@ -74,7 +74,7 @@ Function Get-PARComponentLog {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
+		[ValidateScript( {Test-Path $_ -PathType Leaf})]
 		[string]$PassFile,
 
 		[Parameter(
@@ -188,7 +188,7 @@ Function Get-PARComponentLog {
 						"Code"    = $event.Matches.Groups[2].Value
 						"Message" = $event.Matches.Groups[3].Value
 
-					}
+					} | Add-ObjectDetail -typename VaultControl.Log.Component
 
 				}
 

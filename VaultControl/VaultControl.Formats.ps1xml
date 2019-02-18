@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>VaultControl.Log.Component</Name>
+            <ViewSelectedBy>
+                <TypeName>VaultControl.Log.Component</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Time</Label>
+                        <Width>20</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Code</Label>
+                        <Width>10</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Message</Label>
+                        <Width>85</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <ScriptBlock>
+									if ($host.UI.SupportsVirtualTerminal){
+										$ESC = [char]27
+                                        $o = "$ESC[0m"
+                                        $f = $_.Time + $o
+                                        $e = "$ESC[38;5;"
+                                        switch -regex ($_.Code)
+                                        {
+                                            '.+E$' # Errors
+                                            {
+                                                "${e}196m$f"
+                                            }
+                                            '.+W$' # Warnings
+                                            {
+                                                "${e}226m$f"
+                                            }
+											'.+S$' # System Errors
+                                            {
+                                                "${e}202m$f"
+                                            }
+                                            default{
+                                                "$o$f"
+                                            }
+                                        }
+                                        return
+                                    }
+                                    $_.Time
+                                </ScriptBlock>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>
+									if ($host.UI.SupportsVirtualTerminal){
+										$ESC = [char]27
+                                        $o = "$ESC[0m"
+                                        $f = $_.Code + $o
+                                        $e = "$ESC[38;5;"
+                                        switch -regex ($_.Code)
+                                        {
+                                            '.+E$' # Errors
+                                            {
+                                                "${e}196m$f"
+                                            }
+                                            '.+W$' # Warnings
+                                            {
+                                                "${e}226m$f"
+                                            }
+											'.+S$' # System Errors
+                                            {
+                                                "${e}202m$f"
+                                            }
+                                            default{
+                                                "$o$f"
+                                            }
+                                        }
+                                        return
+                                    }
+                                    $_.Code
+                                </ScriptBlock>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <ScriptBlock>
+									if ($host.UI.SupportsVirtualTerminal){
+										$ESC = [char]27
+                                        $o = "$ESC[0m"
+                                        $f = $_.Message + $o
+                                        $e = "$ESC[38;5;"
+                                        switch -regex ($_.Code)
+                                        {
+                                            '.+E$' # Errors
+                                            {
+                                                "${e}196m$f"
+                                            }
+                                            '.+W$' # Warnings
+                                            {
+                                                "${e}226m$f"
+                                            }
+											'.+S$' # System Errors
+                                            {
+                                                "${e}202m$f"
+                                            }
+                                            default{
+                                                "$o$f"
+                                            }
+                                        }
+                                        return
+                                    }
+                                    $_.Message
+                                </ScriptBlock>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+        <View>
+            <Name>VaultControl.Log.Server</Name>
+            <ViewSelectedBy>
+                <TypeName>VaultControl.Log.Server</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>EventLogRecordTime</Label>
+                        <Width>25</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Source</Label>
+                        <Width>10</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Computer</Label>
+                        <Width>15</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>EventID</Label>
+                        <Width>15</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>EventType</Label>
+                        <Width>10</Width>
+                        <Alignment>right</Alignment>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Description</Label>
+                        <Width>85</Width>
+                        <Alignment>left</Alignment>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>EventLogRecordTime</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Source</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Computer</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>EventID</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>EventType</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Description</PropertyName>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>

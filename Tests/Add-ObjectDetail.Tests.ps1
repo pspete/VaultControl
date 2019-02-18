@@ -35,33 +35,24 @@ Describe $FunctionName {
 
 	InModuleScope $ModuleName {
 
-		Context "Mandatory Parameters" {
-
-			$Parameters = @{Parameter = 'SecureString'}
-
-			It "specifies parameter <Parameter> as mandatory" -TestCases $Parameters {
-
-				param($Parameter)
-
-				(Get-Command ConvertTo-InsecureString).Parameters["$Parameter"].Attributes.Mandatory | Should Be $true
-
-			}
-
-		}
-
 		Context "General" {
 
 			BeforeEach {
 
-				$InputObj = [pscustomobject]@{
-					SecureString = ConvertTo-SecureString SomeSecureString -AsPlainText -Force
-				}
+				$InputObj = [pscustomobject]@{}
+				$InputObj | Add-ObjectDetail -TypeName SomeType -PropertyToAdd @{"SomeProperty" = "SomeValue"} -DefaultProperties SomeProperty
 
 			}
 
-			It "converts securestring to plaintext" {
+			It "Adds Expected Type to Object" {
 
-				ConvertTo-InsecureString -SecureString $InputObj.SecureString| Should Be "SomeSecureString"
+				$InputObj | get-member | select-object -expandproperty typename -Unique | Should Be "SomeType"
+
+			}
+
+			It "Adds Expected Property to Object" {
+
+				$InputObj.SomeProperty | Should Be "SomeValue"
 
 			}
 

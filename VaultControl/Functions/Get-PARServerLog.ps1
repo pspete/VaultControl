@@ -63,7 +63,7 @@ Function Get-PARServerLog {
 			ValueFromPipelineByPropertyName = $True,
 			ParameterSetName = "PassFile"
 		)]
-		[ValidateScript( {Test-Path $_})]
+		[ValidateScript( {Test-Path $_ -PathType Leaf})]
 		[string]$PassFile,
 
 		[Parameter(
@@ -117,7 +117,7 @@ Function Get-PARServerLog {
 					"EventType"          = ($_.Groups[5].Value).Trim()
 					"Description"        = ($_.Groups[6].Value).Trim()
 
-				}
+				} | Add-ObjectDetail -typename VaultControl.Log.Server
 
 			}
 

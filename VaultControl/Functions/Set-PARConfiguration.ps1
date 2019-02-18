@@ -38,7 +38,7 @@ Function Set-PARConfiguration {
 			Mandatory = $false,
 			ValueFromPipelineByPropertyName = $true
 		)]
-		[ValidateScript( {Test-Path $_})]
+		[ValidateScript( {Test-Path $_ -PathType Leaf})]
 		[ValidateNotNullOrEmpty()]
 		[string]$ClientPath,
 

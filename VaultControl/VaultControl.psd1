@@ -4,7 +4,7 @@
 	RootModule        = 'VaultControl.psm1'
 
 	# Version number of this module.
-	ModuleVersion     = '0.0.1'
+	ModuleVersion     = '0.2.0'
 
 	# ID used to uniquely identify this module
 	GUID              = 'fba9035e-5d32-4a7f-ab91-5658c84e0668'
@@ -19,7 +19,7 @@
 	Copyright         = '(c) 2018 Pete Maan. All rights reserved.'
 
 	# Description of the functionality provided by this module
-	Description       = 'Invoke CyberArk PARClient.exe Utility with PowerShell'
+	Description       = 'Invoke CyberArk PARClient.exe Utility Commands with PowerShell'
 
 	# Minimum version of the Windows PowerShell engine required by this module
 	PowerShellVersion = '3.0'
@@ -52,7 +52,7 @@
 	#TypesToProcess    = @()
 
 	# Format files (.ps1xml) to be loaded when importing this module
-	#FormatsToProcess  = @()
+	FormatsToProcess  = @('VaultControl.Formats.ps1xml')
 
 	# Functions to export from this module
 	FunctionsToExport = @(
