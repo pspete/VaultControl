@@ -64,7 +64,7 @@ Download the module from the [PowerShell Gallery](https://www.powershellgallery.
 From a PowerShell prompt, run:
 
 ````powershell
-Install-Module -Name psPAS -Scope CurrentUser
+Install-Module -Name VaultControl -Scope CurrentUser
 ````
 
 #### Option 2: Manual Install
