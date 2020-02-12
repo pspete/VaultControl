@@ -16,7 +16,7 @@
 	# CompanyName = ''
 
 	# Copyright statement for this module
-	Copyright         = '(c) 2018 Pete Maan. All rights reserved.'
+	Copyright         = '(c) 2018-2020 Pete Maan. All rights reserved.'
 
 	# Description of the functionality provided by this module
 	Description       = 'Invoke CyberArk PARClient.exe Utility Commands with PowerShell'
