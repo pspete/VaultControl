@@ -222,8 +222,8 @@ PADR module PADR.exe                           10.2.3.4
 			It "reports expected disk info" {
 				$Output = $InputObj | Get-PARServer
 				$Output.Disk.Drive | Should Be "C:\"
-				$Output.Disk."Space(MB)" | Should Be "35336"
-				$Output.Disk."Used(%)" | Should Be "69.92"
+				$Output.Disk."FreeSpace(MB)" | Should Be "35336"
+				$Output.Disk."FreeSpace(%)" | Should Be "69.92"
 
 			}
 

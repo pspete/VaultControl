@@ -4,7 +4,7 @@
 	RootModule        = 'VaultControl.psm1'
 
 	# Version number of this module.
-	ModuleVersion     = '1.0.46'
+	ModuleVersion     = '1.1.51'
 
 	# ID used to uniquely identify this module
 	GUID              = 'fba9035e-5d32-4a7f-ab91-5658c84e0668'
@@ -16,7 +16,7 @@
 	# CompanyName = ''
 
 	# Copyright statement for this module
-	Copyright         = '(c) 2018 Pete Maan. All rights reserved.'
+	Copyright         = '(c) 2018-2020 Pete Maan. All rights reserved.'
 
 	# Description of the functionality provided by this module
 	Description       = 'Invoke CyberArk PARClient.exe Utility Commands with PowerShell'

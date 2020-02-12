@@ -1,10 +1,10 @@
 # VaultControl
 
-[![appveyor][]][av-site]
-[![tests][]][tests-site]
-[![coveralls][]][cv-site]
-[![psgallery][]][ps-site]
-[![license][]][license-link]
+| Master Branch            | Latest Build            | CodeFactor                | Coverage                    |  PowerShell Gallery       |  License                   |
+|--------------------------|-------------------------|---------------------------|-----------------------------|---------------------------|----------------------------|
+|[![appveyor][]][av-site]  |[![tests][]][tests-site] | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |[![license][]][license-link]|
+|                          |                         |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |                            |
+
 
 [appveyor]:https://ci.appveyor.com/api/projects/status/svnyleaaupspfk1q/branch/master?svg=true
 [av-site]:https://ci.appveyor.com/project/pspete/vaultcontrol/branch/master
@@ -16,6 +16,11 @@
 [ps-site]:https://www.powershellgallery.com/packages/VaultControl
 [license]:https://img.shields.io/github/license/pspete/vaultcontrol.svg
 [license-link]:https://github.com/pspete/VaultControl/blob/master/LICENSE.md
+[downloads]:https://img.shields.io/powershellgallery/dt/vaultcontrol.svg?color=blue
+[cf-site]:https://www.codefactor.io/repository/github/pspete/vaultcontrol
+[codefactor]:https://www.codefactor.io/repository/github/pspete/vaultcontrol/badge
+[codecov]:https://codecov.io/gh/pspete/VaultControl/branch/master/graph/badge.svg
+[codecov-link]:https://codecov.io/gh/pspete/VaultControl
 
 Invoke CyberArk PARClient.exe Utility Commands with PowerShell
 

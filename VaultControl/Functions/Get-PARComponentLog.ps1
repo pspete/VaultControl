@@ -176,8 +176,6 @@ Function Get-PARComponentLog {
 
 			($Result.StdOut).Split("`n") | ForEach-Object {
 
-				Write-Debug "LogLine: $_"
-
 				$event = ($_ | Select-String $Pattern -AllMatches)
 
 				if($event -match '\S') {

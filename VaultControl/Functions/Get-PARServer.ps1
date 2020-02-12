@@ -4,7 +4,7 @@ Function Get-PARServer {
 	Gets OS resource information from remote vault
 
 	.DESCRIPTION
-	Returns details of CPU, Memory & Disk usage from remote vault, as well as details of installed components.
+	Returns details of CPU, Memory & Free Disk space from remote vault, as well as details of installed components.
 
 	.PARAMETER Server
 	The name or address of the remote Vault server to target with PARClient
@@ -96,8 +96,8 @@ Function Get-PARServer {
 					[PSCustomObject]@{
 
 						"Drive"     = $DiskInfo[0]
-						"Space(MB)" = ($DiskInfo[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
-						"Used(%)"   = ($DiskInfo[2] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+						"FreeSpace(MB)" = ($DiskInfo[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
+						"FreeSpace(%)"   = ($DiskInfo[2] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
 
 					}
 
