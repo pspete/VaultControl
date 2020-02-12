@@ -93,11 +93,17 @@ Function Get-PARServer {
 
 					$DiskInfo = $_.Line.Split(" ")
 
-					[PSCustomObject]@{
+					For ($i = 0 ; $i -lt $DiskInfo.count ; $i += 3) {
 
-						"Drive"     = $DiskInfo[0]
-						"FreeSpace(MB)" = ($DiskInfo[1] |  Select-String '(\d+)' -AllMatches).Matches.Value
-						"FreeSpace(%)"   = ($DiskInfo[2] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+						$Drive = $DiskInfo[$i..($i + 3)]
+
+						[PSCustomObject]@{
+
+							"Drive"         = $Drive[0]
+							"FreeSpace(MB)" = ($Drive[1] | Select-String '(\d+)' -AllMatches).Matches.Value
+							"FreeSpace(%)"  = ($Drive[2] | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+
+						}
 
 					}
 

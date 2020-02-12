@@ -81,8 +81,7 @@ Find your PowerShell Module Paths with the following command:
 $env:PSModulePath.split(';')
 
 ```
-
-[Download the ```master``` branch](https://github.com/pspete/VaultControl/archive/master.zip)
+[Download a Release](https://github.com/pspete/VaultControl/releases) or the [```master``` branch](https://github.com/pspete/VaultControl/archive/master.zip)
 
 Extract the archive
 
