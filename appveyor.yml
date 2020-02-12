@@ -3,14 +3,19 @@ version: 1.0.{build}
 
 environment:
   access_token:
-    secure: eWAovbJD8C/F5ObWegnOimwNFyeU1vXzW6lwbJzhHpSUgjT+CMexMcPUBMKrm+Wl
+    secure: bDZ9LJ84SWlGw/D3R/q3ADwDslfrLNZLMdH3ZRjdi5xwkGanmjf7DvgN+crc4BU/
   psgallery_key:
     secure: FuPgJskczZMptxRgdUlBAy7OYmXBQl4zq86kXXSmBt6wKudnM2PK7W6cM7bj0te1
   coveralls_key:
     secure: lCe6CMSzOCxMfS6HrSP0Emt/0+ESY+ysqF6Y1PB4wh2PII2G7PtNARzFH+tRXwLs
+  github_email:
+    secure: x5ljenzXfYXkzpEu9eX7AQvb3AkFbiXG2NndMzw9Zc4=
+
+skip_tags: true
 
 skip_commits:
   files:
+    - docs\*
     - .github\*
     - .vscode\*
     - README.md
@@ -20,23 +25,28 @@ skip_commits:
     - ISSUE_TEMPLATE.md
     - PULL_REQUEST_TEMPLATE.md
     - appveyor.yml
+    - CHANGELOG.md
   message: /update readme.*|update version.*|update appveyor.*/
 
 only_commits:
   files:
+    - build\
     - VaultControl\
     - Tests\
 
 image: Visual Studio 2017
 
 install:
+  - ps: . .\build\install.ps1
   - pwsh.exe -File .\build\install.ps1
 
 build_script:
-  - pwsh.exe -File .\build\build.ps1
+  - ps: . .\build\build.ps1
 
 test_script:
+  - ps: . .\build\test.ps1
   - pwsh.exe -File .\build\test.ps1
 
 deploy_script:
-  - pwsh.exe -File .\build\deploy.ps1
+  - ps: . .\build\deploy-github.ps1
+  - pwsh.exe -File .\build\deploy-psgallery.ps1
