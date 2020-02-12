@@ -104,8 +104,6 @@ Function Start-PARComponent {
 
 		If($Result.StdOut) {
 
-			Write-Debug "Status: $($Result.StdOut)"
-
 			$Service = ($Result.StdOut | Select-String '(started|Error)' -AllMatches)
 
 			[PSCustomObject]@{

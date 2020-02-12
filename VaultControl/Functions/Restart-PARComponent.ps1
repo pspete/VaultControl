@@ -79,8 +79,6 @@ Function Restart-PARComponent {
 
 		If($Result.StdOut) {
 
-			Write-Debug "Status: $($Result.StdOut)"
-
 			$Service = ($Result.StdOut | Select-String '(restarted|Error)' -AllMatches)
 
 			[PSCustomObject]@{

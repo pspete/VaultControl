@@ -106,8 +106,6 @@ Function Get-PARServerLog {
 
 			$Logs.Matches | ForEach-Object {
 
-				Write-Debug "Event: $($_.Groups[0].Value)"
-
 				[PSCustomObject]@{
 
 					"EventLogRecordTime" = ($_.Groups[1].Value).Trim()

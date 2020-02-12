@@ -108,9 +108,6 @@
 
 	Begin {
 
-		$CallStack = $((Get-PSCallStack).Command)[1]
-		Write-Debug "Calling Function: $CallStack"
-
 		Try {
 
 			Get-Variable -Name PAR -ErrorAction Stop
@@ -182,15 +179,11 @@
 			if($Result.StdOut -match '((?:^[A-Z]{5}[0-9]{3}[A-Z])|(?:ERROR \(\d+\)))(?::)? (.+)$') {
 
 				#PARCL002S Authentication failure.
-				Write-Debug "ErrorId: $($Matches[1])"
-				Write-Debug "Message: $($Matches[2])"
 				Write-Error -Message $Matches[2] -ErrorId $Matches[1]
 
 			} ElseIf($Result.StdOut -match '(.+) \((.+: \d)\)') {
 
 				#Cannot get parameter DisableExceptionHandling. (Reason: 7)
-				Write-Debug "ErrorId: $($Matches[2])"
-				Write-Debug "Message: $($Matches[1])"
 				Write-Error -Message $Matches[1] -ErrorId $Matches[2]
 
 			} Else {$Result}

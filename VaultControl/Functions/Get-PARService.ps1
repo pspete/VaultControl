@@ -82,7 +82,6 @@ Function Get-PARService {
 
 			($Result.StdOut).Split("`n") | ForEach-Object {
 
-				Write-Debug "ServiceStatus: $_"
 				$Service = ($_ | Select-String '^(.+)is\s([a-z]+)' -AllMatches)
 
 				If($Service -match '\S') {
