@@ -43,6 +43,8 @@ Describe $FunctionName {
 					$true
 				}
 
+				Mock Export-Clixml -MockWith {}
+
 				$InputObj = [pscustomobject]@{
 					ClientPath = "SomePath"
 					Port       = 666
@@ -64,6 +66,13 @@ Describe $FunctionName {
 			it "sets client path property value" {
 				$InputObj | Set-PARConfiguration
 				$($Script:PAR.Port) | Should Be 666
+			}
+
+			it "saves configuration to user profile" {
+				$InputObj | Set-PARConfiguration
+				Assert-MockCalled Export-Clixml -Times 1 -Exactly -Scope It -ParameterFilter {
+					$Path -eq "$env:HOMEDRIVE$env:HomePath\PARConfiguration.xml"
+				}
 			}
 
 		}

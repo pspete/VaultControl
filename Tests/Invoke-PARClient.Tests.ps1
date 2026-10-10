@@ -13,10 +13,10 @@ $ModulePath = Resolve-Path "$Here\..\$ModuleName"
 #Define Path to Module Manifest
 $ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
-#Preference file must be removed and module must be re-imported for tests to complete
-Remove-Item -Path "$env:HOMEDRIVE$env:HomePath\PARConfiguration.xml" -Force -ErrorAction SilentlyContinue
+#Module must be re-imported and imported preferences cleared for tests to complete
 Remove-Module -Name $ModuleName -Force -ErrorAction SilentlyContinue
 Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop
+& (Get-Module -Name $ModuleName) {Remove-Variable -Name PAR -Scope Script -ErrorAction SilentlyContinue}
 
 BeforeAll {
 
@@ -130,6 +130,8 @@ Describe $FunctionName {
 				Mock Test-Path -MockWith {
 					$true
 				}
+
+				Mock Export-Clixml -MockWith {}
 
 				Mock Start-PARClientProcess -MockWith {
 					Write-Output @{}
