@@ -194,6 +194,24 @@ Describe $FunctionName {
 
 			}
 
+			It "quotes passfile path" {
+
+				$InputObj = [pscustomobject]@{
+					Server            = "SomeServer"
+					CommandParameters = "Some Command Parameters"
+					PassFile          = "C:\Some Folder\Some File"
+				}
+
+				$InputObj | Invoke-PARClient
+
+				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It -ParameterFilter {
+
+					$Process.StartInfo.Arguments -match '^SomeServer /UsePassFile "C:\\Some Folder\\Some File" '
+
+				}
+
+			}
+
 		}
 
 		Context "Reporting Errors" {
@@ -252,6 +270,21 @@ Describe $FunctionName {
 				}
 
 				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "Cannot get parameter DisableExceptionHandling."
+
+			}
+
+			it "reports 'CLP010S: Message' format errors on stdout" {
+
+				Mock Start-PARClientProcess -MockWith {
+					[pscustomobject]@{
+						"ExitCode" = 1
+						"StdOut"   = "CLP010S: Parameter `"Test\test.pass`" is redundant`r`nUsage: `r`nPARClient /?`r`n"
+						"StdErr"   = $null
+					}
+
+				}
+
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "is redundant"
 
 			}
 

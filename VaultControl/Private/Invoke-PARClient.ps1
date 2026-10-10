@@ -144,7 +144,7 @@
 
 			}
 
-			"PassFile" {$PARCommand = "$Server /UsePassFile $PassFile"; break}
+			"PassFile" {$PARCommand = "$Server /UsePassFile `"$PassFile`""; break}
 
 		}
 
@@ -177,7 +177,7 @@
 
 			$Result | Add-Member -MemberType NoteProperty -Name Server -Value $Server
 
-			if($Result.StdOut -match '((?:^[A-Z]{5}[0-9]{3}[A-Z])|(?:ERROR \(\d+\)))(?::)? (.+)$') {
+			if($Result.StdOut -match '((?:^[A-Z]{3,5}[0-9]{3}[A-Z])|(?:ERROR \(\d+\)))(?::)? ([^\r\n]+)') {
 
 				#PARCL002S Authentication failure.
 				Write-Error -Message $Matches[2] -ErrorId $Matches[1]
