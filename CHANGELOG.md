@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Update `Get-PARServerLog`
   - Help text describes behaviour when `TimeFrom` is not specified.
   - Fixed error when no events are returned.
+  - `EventID` returned as the standard event ID (e.g. `7036`) instead of the raw value including qualifier bits (e.g. `1073748860`).
 - Update `Invoke-PARClient`
   - `PassFile` path is quoted, allowing paths containing spaces.
   - Detects `CLP`-prefixed errors & multi-line error output.

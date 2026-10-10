@@ -136,6 +136,34 @@ Description: The Software Protection service has stopped.
 
 			}
 
+			It "returns EventID without qualifier bits" -TestCases @(
+				@{Raw = '1073748860'; Expected = 7036},
+				@{Raw = '3221232472'; Expected = 7000},
+				@{Raw = '6005'; Expected = 6005}
+			) {
+
+				param($Raw, $Expected)
+
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{
+						"StdOut" = @"
+PARAgent version: 15.2.0.44
+EventLogRecordTime: Sat Oct 10 15:33:36 2026
+Source: Service Control Manager
+Computer: EPV1
+Event ID: $Raw
+Event Type: 4
+Description: The Software Protection service entered the stopped state.
+"@
+					}
+				}
+
+				$Result = $InputObj | Get-PARServerLog
+				$Result.EventID | Should Be $Expected
+				$Result.EventID | Should BeOfType [int]
+
+			}
+
 		}
 
 	}

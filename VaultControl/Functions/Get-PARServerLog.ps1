@@ -112,7 +112,7 @@ Function Get-PARServerLog {
 					"EventLogRecordTime" = ($_.Groups[1].Value).Trim()
 					"Source"             = ($_.Groups[2].Value).Trim()
 					"Computer"           = ($_.Groups[3].Value).Trim()
-					"EventID"            = ($_.Groups[4].Value).Trim()
+					"EventID"            = [int]([int64](($_.Groups[4].Value).Trim()) -band 0xFFFF)
 					"EventType"          = ($_.Groups[5].Value).Trim()
 					"Description"        = ($_.Groups[6].Value).Trim()
 
