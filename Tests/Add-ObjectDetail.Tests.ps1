@@ -1,39 +1,28 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
+	#Module Name
+	$ModuleName = 'VaultControl'
 
-#Resolve Path to Module Directory
-$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+	#Resolve Path to Module Directory
+	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
 
-#Define Path to Module Manifest
-$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
+	#Define Path to Module Manifest
+	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
-if( -not (Get-Module -Name $ModuleName -All)) {
+	if ( -not (Get-Module -Name $ModuleName -All)) {
 
-	Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
 
-}
-
-BeforeAll {
-
-	#$Script:RequestBody = $null
+	}
 
 }
 
-AfterAll {
+Describe 'Add-ObjectDetail' {
 
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
-
-	InModuleScope $ModuleName {
+	InModuleScope 'VaultControl' {
 
 		Context "General" {
 
@@ -46,13 +35,13 @@ Describe $FunctionName {
 
 			It "Adds Expected Type to Object" {
 
-				$InputObj | get-member | select-object -expandproperty typename -Unique | Should Be "SomeType"
+				$InputObj | get-member | select-object -expandproperty typename -Unique | Should -Be "SomeType"
 
 			}
 
 			It "Adds Expected Property to Object" {
 
-				$InputObj.SomeProperty | Should Be "SomeValue"
+				$InputObj.SomeProperty | Should -Be "SomeValue"
 
 			}
 

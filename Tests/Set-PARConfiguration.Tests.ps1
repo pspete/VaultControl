@@ -1,39 +1,28 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
+	#Module Name
+	$ModuleName = 'VaultControl'
 
-#Resolve Path to Module Directory
-$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+	#Resolve Path to Module Directory
+	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
 
-#Define Path to Module Manifest
-$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
+	#Define Path to Module Manifest
+	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
-if( -not (Get-Module -Name $ModuleName -All)) {
+	if ( -not (Get-Module -Name $ModuleName -All)) {
 
-	Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
 
-}
-
-BeforeAll {
-
-	#$Script:RequestBody = $null
+	}
 
 }
 
-AfterAll {
+Describe 'Set-PARConfiguration' {
 
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
-
-	InModuleScope $ModuleName {
+	InModuleScope 'VaultControl' {
 
 		Context "General" {
 
@@ -55,22 +44,22 @@ Describe $FunctionName {
 			it "sets value of script scope variable" {
 
 				$InputObj | Set-PARConfiguration
-				$Script:PAR | Should Not BeNullOrEmpty
+				$Script:PAR | Should -Not -BeNullOrEmpty
 			}
 
 			it "sets client path property value" {
 				$InputObj | Set-PARConfiguration
-				$($Script:PAR.ClientPath) | Should Be "SomePath"
+				$($Script:PAR.ClientPath) | Should -Be "SomePath"
 			}
 
 			it "sets client path property value" {
 				$InputObj | Set-PARConfiguration
-				$($Script:PAR.Port) | Should Be 666
+				$($Script:PAR.Port) | Should -Be 666
 			}
 
 			it "saves configuration to user profile" {
 				$InputObj | Set-PARConfiguration
-				Assert-MockCalled Export-Clixml -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Export-Clixml -Times 1 -Exactly -ParameterFilter {
 					$Path -eq "$env:HOMEDRIVE$env:HomePath\PARConfiguration.xml"
 				}
 			}

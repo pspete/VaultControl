@@ -1,52 +1,5 @@
+# .ExternalHelp VaultControl-help.xml
 Function Get-PARComponentLog {
-	<#
-	.SYNOPSIS
-	Returns events from remote component log.
-
-	.DESCRIPTION
-	Gets events from logs for remote Vault, PADR, CVM or ENE.
-
-	.PARAMETER Server
-	The name or address of the remote Vault server to target with PARClient
-
-	.PARAMETER Password
-	The password for remote operations via PARClient as a secure string
-
-	.PARAMETER Credential
-	The password for remote operations via PARClient held in a credential object
-
-	.PARAMETER PassFile
-	The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
-	operations via PARClient
-
-	.PARAMETER Component
-	The name of the component to query. Vault, PADR, CVM or ENE are the accepted values
-
-	.PARAMETER LogFile
-	For ENE & CVM Logs, the log file to return must be specified. Accepted values are "Console" or "Trace"
-
-	.PARAMETER TimeFrom
-	For Vault or PADR log queries, optionally provide a datetime from which to return the logs from.
-
-	.PARAMETER Lines
-	For Vault log queries, optionally provide the number of log lines to return.
-
-	.EXAMPLE
-	Get-PARComponentLog -Server EPV1 -Password $SecureString -Component Vault -TimeFrom (Get-Date).AddDays(-1)
-
-	Show events from the ITALOG file on Vault EPV1 from the last 24 hours
-
-	.EXAMPLE
-	Get-PARComponentLog -Server EPV1 -Password $SecureString -Component ENE -LogFile Trace
-
-	Show events from the ENE Trace log on vault EPV1
-
-	.EXAMPLE
-	Get-PARComponentLog -Server EPV1 -Password $SecureString -Component Vault -Lines 10
-
-	Show the last 10 lines of the ITALOG file on vault EPV1
-
-	#>
 	[CmdletBinding()]
 	Param(
 		[Parameter(

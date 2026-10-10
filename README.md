@@ -1,21 +1,18 @@
 # VaultControl
 
-| Master Branch            | Latest Build            | CodeFactor                | Coverage                    |  PowerShell Gallery       |  License                   |
-|--------------------------|-------------------------|---------------------------|-----------------------------|---------------------------|----------------------------|
-|[![appveyor][]][av-site]  |[![tests][]][tests-site] | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |[![license][]][license-link]|
-|                          |                         |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |                            |
+| Master Branch            | Dev Branch           | CodeFactor                 | Coverage                     | PowerShell Gallery        | License                      |
+| ------------------------ | -------------------- | -------------------------- | ---------------------------- | ------------------------- | ---------------------------- |
+| [![build][]][build-site] | [![dev][]][dev-site] | [![codefactor][]][cf-site] | [![codecov][]][codecov-link] | [![psgallery][]][ps-site] | [![license][]][license-link] |
+|                          |                      |                            |                              | [![downloads][]][ps-site] |                              |
 
-
-[appveyor]:https://ci.appveyor.com/api/projects/status/svnyleaaupspfk1q/branch/master?svg=true
-[av-site]:https://ci.appveyor.com/project/pspete/vaultcontrol/branch/master
-[tests]:https://img.shields.io/appveyor/tests/pspete/vaultcontrol.svg
-[tests-site]:https://ci.appveyor.com/project/pspete/vaultcontrol
-[coveralls]:https://coveralls.io/repos/github/pspete/VaultControl/badge.svg
-[cv-site]:https://coveralls.io/github/pspete/VaultControl
+[build]:https://github.com/pspete/VaultControl/actions/workflows/ci.yml/badge.svg?branch=master&event=push
+[build-site]:https://github.com/pspete/VaultControl/actions/workflows/ci.yml?query=branch%3Amaster
+[dev]:https://github.com/pspete/VaultControl/actions/workflows/ci.yml/badge.svg?branch=dev&event=push
+[dev-site]:https://github.com/pspete/VaultControl/actions/workflows/ci.yml?query=branch%3Adev
 [psgallery]:https://img.shields.io/powershellgallery/v/VaultControl.svg
 [ps-site]:https://www.powershellgallery.com/packages/VaultControl
 [license]:https://img.shields.io/github/license/pspete/vaultcontrol.svg
-[license-link]:https://github.com/pspete/VaultControl/blob/master/LICENSE.md
+[license-link]:https://github.com/pspete/VaultControl/blob/master/LICENSE
 [downloads]:https://img.shields.io/powershellgallery/dt/vaultcontrol.svg?color=blue
 [cf-site]:https://www.codefactor.io/repository/github/pspete/vaultcontrol
 [codefactor]:https://www.codefactor.io/repository/github/pspete/vaultcontrol/badge
@@ -98,7 +95,7 @@ All notable changes to this project will be documented in the [Changelog](CHANGE
 
 ## License
 
-This project is [licensed under the MIT License](LICENSE.md).
+This project is [licensed under the MIT License](LICENSE).
 
 ## Contributing
 

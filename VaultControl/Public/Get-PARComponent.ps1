@@ -1,33 +1,5 @@
+# .ExternalHelp VaultControl-help.xml
 Function Get-PARComponent {
-	<#
-	.SYNOPSIS
-	Queries the status of a component running on a remote vault server
-
-	.DESCRIPTION
-	Gets status of remote Vault, PADR, CVM or ENE component
-
-	.PARAMETER Server
-	The name or address of the remote Vault server to target with PARClient
-
-	.PARAMETER Password
-	The password for remote operations via PARClient as a secure string
-
-	.PARAMETER Credential
-	The password for remote operations via PARClient held in a credential object
-
-	.PARAMETER PassFile
-	The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
-	operations via PARClient
-
-	.PARAMETER Component
-	The name of the component to query. Vault, PADR, CVM or ENE are the accepted values
-
-	.EXAMPLE
-	Get-PARComponent -Server 10.10.10.10 -Password $SecureString -Component Vault
-
-	Returns status of Vault service on remote vault with address 10.10.10.10
-
-	#>
 	[CmdletBinding()]
 	Param(
 		[Parameter(

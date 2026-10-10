@@ -1,39 +1,5 @@
+# .ExternalHelp VaultControl-help.xml
 Function Get-PARComponentConfig {
-	<#
-	.SYNOPSIS
-	Gets values set in component configuration files
-
-	.DESCRIPTION
-	Queries remote vault server for values contained in component configuration files DBPARM.ini or PADR.ini.
-
-	.PARAMETER Server
-	The name or address of the remote Vault server to target with PARClient
-
-	.PARAMETER Password
-	The password for remote operations via PARClient as a secure string
-
-	.PARAMETER Credential
-	The password for remote operations via PARClient held in a credential object
-
-	.PARAMETER PassFile
-	The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
-	operations via PARClient
-
-	.PARAMETER Component
-	The name of the component to query. Vault or PADR are the accepted values
-
-	.PARAMETER Parameter
-	The name of the Parameter to get the value of.
-	For Vault Components, the valid parameter names are:
-	"DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
-	For Disaster Recovery Components, the valid parameter names are:
-	"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"
-
-	.EXAMPLE
-	Get-PARComponentConfig -Server EPV1 -Credential $credential -Component Vault -Parameter DebugLevel
-
-	Returns the DebugLevel parameter value configured in the dbparm.ini file on vault server EPV1
-	#>
 	[CmdletBinding()]
 	Param(
 		[Parameter(
