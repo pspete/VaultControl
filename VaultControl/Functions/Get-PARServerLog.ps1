@@ -25,12 +25,12 @@ Function Get-PARServerLog {
 
 	.PARAMETER TimeFrom
 	A date time to return events from.
-	If not specified, PARAgent returns only events logged since the previous query made without TimeFrom.
+	Defaults to 24 hours before the current time.
 
 	.EXAMPLE
 	Get-PARServerLog -Server EPV1 -Credential $Cred -LogName Application
 
-	Get events from Application log on vault EPV1
+	Get events logged in the last 24 hours from Application log on vault EPV1
 
 	.EXAMPLE
 	Get-PARServerLog -Server zEPV1 -Credential $Cred -LogName System -TimeFrom (Get-Date 5/5/2018)
@@ -78,7 +78,7 @@ Function Get-PARServerLog {
 			Mandatory = $false,
 			ValueFromPipelineByPropertyName = $true
 		)]
-		[datetime]$TimeFrom #= (Get-Date (Get-Date).AddMinutes(-10) -Format ddMMyyyy:HHmm)
+		[datetime]$TimeFrom = (Get-Date).AddDays(-1)
 	)
 
 	Begin {
@@ -88,14 +88,7 @@ Function Get-PARServerLog {
 	}
 	Process {
 
-		$Command = "GetOSLog /Name $LogName"
-
-		if($PSBoundParameters.ContainsKey("TimeFrom")) {
-
-			$DateStamp = (Get-Date $($PSBoundParameters["TimeFrom"]) -Format ddMMyyyy:HHmm)
-			$Command = "$Command /TimeFrom $DateStamp"
-
-		}
+		$Command = "GetOSLog /Name $LogName /TimeFrom $(Get-Date $TimeFrom -Format ddMMyyyy:HHmm)"
 
 		$PSBoundParameters.Add("CommandParameters", "$Command")
 

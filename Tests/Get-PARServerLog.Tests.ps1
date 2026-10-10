@@ -108,6 +108,30 @@ Description: The Software Protection service has stopped.
 				} -Times 1 -Exactly -Scope It
 			}
 
+			It "defaults TimeFrom to 24 hours ago" {
+
+				Mock Get-Date -ParameterFilter { $Format -eq "ddMMyyyy:HHmm" } -MockWith { "TimeStamp" }
+
+				$InputObj = [pscustomobject]@{
+					Server   = "SomeServer"
+					Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					LogName  = "System"
+				}
+
+				$Before = (Get-Date).AddDays(-1)
+				$InputObj | Get-PARServerLog
+				$After = (Get-Date).AddDays(-1)
+
+				Assert-MockCalled Get-Date -Times 1 -Exactly -Scope It -ParameterFilter {
+					$Format -eq "ddMMyyyy:HHmm" -and $Date -ge $Before -and $Date -le $After
+				}
+
+				Assert-MockCalled Invoke-PARClient -Times 1 -Exactly -Scope It -ParameterFilter {
+					$CommandParameters -eq "GetOSLog /Name System /TimeFrom TimeStamp"
+				}
+
+			}
+
 		}
 
 		Context "Output" {

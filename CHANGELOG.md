@@ -9,10 +9,14 @@ All notable changes to this project will be documented in this file.
 - Update `Get-PARServer` & `Get-PARServerLog`
   - Fixed parsing of PARAgent 15.x output, which includes a `PARAgent version` header line.
 - Update `Get-PARServerLog`
-  - Help text describes behaviour when `TimeFrom` is not specified.
+  - `TimeFrom` defaults to 24 hours before the current time.
   - Fixed error when no events are returned.
   - `EventID` returned as the standard event ID (e.g. `7036`) instead of the raw value including qualifier bits (e.g. `1073748860`).
 - Update `Invoke-PARClient`
+  - Uses a new state file for each command, deleted on completion ([#11](https://github.com/pspete/VaultControl/issues/11)).
+    - Repeated log queries no longer return only records unread by a previous query.
+    - `<PID>.tmp` state files are no longer left in the temp directory.
+  - No longer outputs the `$PAR` variable alongside command results.
   - `PassFile` path is quoted, allowing paths containing spaces.
   - Detects `CLP`-prefixed errors & multi-line error output.
   - Output containing `(<Text>: <Number>)` is no longer reported as an error; only `(Reason: <Number>)` is.

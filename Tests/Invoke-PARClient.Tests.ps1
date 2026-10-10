@@ -329,9 +329,61 @@ Describe $FunctionName {
 
 				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It -ParameterFilter {
 
-					$Process.StartInfo.Arguments -eq $('SomeServer/SomePassword /Port 1234 /StateFileName ' + $(Join-Path $env:temp "$PID.tmp") + ' /Q /C "Some Command Parameters"')
+					$Process.StartInfo.Arguments -match $('^SomeServer/SomePassword /Port 1234 /StateFileName "' + [regex]::Escape($env:temp) + '\\[0-9a-f-]{36}\.tmp" /Q /C "Some Command Parameters"$')
 
 				}
+
+			}
+
+			It "uses a new state file for each command" {
+
+				$Script:StateFiles = @()
+				Mock Start-PARClientProcess -MockWith {
+					$Script:StateFiles += [regex]::Match($Process.StartInfo.Arguments, '/StateFileName "([^"]+)"').Groups[1].Value
+					Write-Output @{}
+				}
+
+				$InputObj | Invoke-PARClient
+				$InputObj | Invoke-PARClient
+
+				$Script:StateFiles.Count | Should Be 2
+				$Script:StateFiles[0] | Should Not Be $Script:StateFiles[1]
+
+			}
+
+			It "deletes the state file after the command completes" {
+
+				Mock Remove-Item -MockWith {}
+
+				$InputObj | Invoke-PARClient
+
+				Assert-MockCalled Remove-Item -Times 1 -Exactly -Scope It -ParameterFilter {
+					$Path -match '[0-9a-f-]{36}\.tmp$'
+				}
+
+			}
+
+			It "deletes the state file if the command throws" {
+
+				Mock Remove-Item -MockWith {}
+				Mock Start-PARClientProcess -MockWith { throw "Process Failed" }
+
+				{$InputObj | Invoke-PARClient} | Should Throw "Process Failed"
+
+				Assert-MockCalled Remove-Item -Times 1 -Exactly -Scope It
+
+			}
+
+			It "does not output the `$PAR variable" {
+
+				Mock Start-PARClientProcess -MockWith {
+					[pscustomobject]@{"ExitCode" = 0; "StdOut" = "Output"; "StdErr" = $null}
+				}
+
+				$Result = $InputObj | Invoke-PARClient
+
+				@($Result).Count | Should Be 1
+				$Result.StdOut | Should Be "Output"
 
 			}
 
