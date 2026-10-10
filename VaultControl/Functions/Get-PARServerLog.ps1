@@ -102,7 +102,7 @@ Function Get-PARServerLog {
 
 		If($Result.StdOut) {
 
-			$Logs = $Result.StdOut | Select-String $Pattern -AllMatches
+			$Logs = $Result.StdOut -replace '(?m)^PARAgent version:.*(\r?\n)?', '' | Select-String $Pattern -AllMatches
 
 			$Logs.Matches | ForEach-Object {
 

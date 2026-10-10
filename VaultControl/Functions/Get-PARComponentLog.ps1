@@ -176,15 +176,15 @@ Function Get-PARComponentLog {
 
 			($Result.StdOut).Split("`n") | ForEach-Object {
 
-				$event = ($_ | Select-String $Pattern -AllMatches)
+				$LogEntry = ($_ | Select-String $Pattern -AllMatches)
 
-				if($event -match '\S') {
+				if($LogEntry -match '\S') {
 
 					[PSCustomObject]@{
 
-						"Time"    = $event.Matches.Groups[1].Value -replace '(\s\W\s)', ' '
-						"Code"    = $event.Matches.Groups[2].Value
-						"Message" = $event.Matches.Groups[3].Value
+						"Time"    = $LogEntry.Matches.Groups[1].Value -replace '(\s\W\s)', ' '
+						"Code"    = $LogEntry.Matches.Groups[2].Value
+						"Message" = $LogEntry.Matches.Groups[3].Value
 
 					} | Add-ObjectDetail -typename VaultControl.Log.Component
 

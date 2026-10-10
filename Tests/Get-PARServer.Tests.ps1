@@ -253,6 +253,47 @@ PADR module PADR.exe                           10.2.3.4
 
 		}
 
+		Context "PARAgent Version Header" {
+
+			BeforeEach {
+
+				$Script:counter = 0
+				Mock Invoke-PARClient -MockWith {
+
+					$Script:counter++
+					$Header = "PARAgent version: 15.2.0.44`r`n"
+
+					switch ($Script:counter) {
+						1 {[PSCustomObject]@{"StdOut" = "$($Header)%0.0`r`n"}}
+						2 {[PSCustomObject]@{"StdOut" = "$($Header)C:\ 34740MB (68.58%)`r`n"}}
+						3 {[PSCustomObject]@{"StdOut" = "$($Header)Physical memory: Total=4193216K, Free=2103028K, Utilized=49.85%`r`nSwap memory: Total=5848328K, Free=630288K, Utilized=89.22%`r`n"}}
+						4 {[PSCustomObject]@{"StdOut" = "$($Header)Vault module dbmain.exe                        15.2.0.44`r`n"}}
+					}
+
+				}
+
+				$InputObj = [pscustomobject]@{
+					Server   = "SomeServer"
+					Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+				}
+
+			}
+
+			It "ignores version header in output" {
+				$Output = $InputObj | Get-PARServer
+				$Output."CPU(%)" | Should Be "0.0"
+				@($Output.Disk).Count | Should Be 1
+				$Output.Disk.Drive | Should Be "C:\"
+				@($Output.Memory).Count | Should Be 2
+				$Output.Memory[1]."Used(%)" | Should Be "89.22"
+				@($Output.Components).Count | Should Be 1
+				$Output.Components.Component | Should Be "Vault"
+				$Output.Components.Version | Should Be "15.2.0.44"
+
+			}
+
+		}
+
 	}
 
 }

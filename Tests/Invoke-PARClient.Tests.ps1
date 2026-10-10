@@ -255,6 +255,21 @@ Describe $FunctionName {
 
 			}
 
+			it "does not report stdout containing '(Text: 0)' as an error" {
+
+				Mock Start-PARClientProcess -MockWith {
+					[pscustomobject]@{
+						"ExitCode" = 0
+						"StdOut"   = "Description: Virtualization-based security (Enabled policies: 0)"
+						"StdErr"   = $null
+					}
+
+				}
+
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Not Throw
+
+			}
+
 		}
 
 		Context "Command Arguments" {

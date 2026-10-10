@@ -46,6 +46,7 @@
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "RemainingArgs", Justification = "Catch-all for unbound pipeline properties")]
 	param(
 
 		[Parameter(
@@ -181,7 +182,7 @@
 				#PARCL002S Authentication failure.
 				Write-Error -Message $Matches[2] -ErrorId $Matches[1]
 
-			} ElseIf($Result.StdOut -match '(.+) \((.+: \d)\)') {
+			} ElseIf($Result.StdOut -match '(.+) \((Reason: \d+)\)') {
 
 				#Cannot get parameter DisableExceptionHandling. (Reason: 7)
 				Write-Error -Message $Matches[1] -ErrorId $Matches[2]

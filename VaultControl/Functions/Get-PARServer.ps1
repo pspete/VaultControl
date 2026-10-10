@@ -77,19 +77,24 @@ Function Get-PARServer {
 
 			$Components = Invoke-PARClient @PSBoundParameters
 
+			#Remove PARAgent version header line
+			$CPU, $Disk, $Memory, $Components = $CPU, $Disk, $Memory, $Components | ForEach-Object {
 
+				$_.StdOut -replace '(?m)^PARAgent version:.*(\r?\n)?', ''
 
-			If($CPU.StdOut) {
+			}
 
-				$CPU = ($CPU.StdOut  | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
+			If($CPU) {
+
+				$CPU = ($CPU  | Select-String '(\d+\.\d+)' -AllMatches).Matches.Value
 
 			}
 
 			Else {$CPU = $null}
 
-			If($Disk.StdOut) {
+			If($Disk) {
 
-				$Disk = $Disk.StdOut | Select-String '(.+)' -AllMatches | ForEach-Object {
+				$Disk = $Disk | Select-String '(.+)' -AllMatches | ForEach-Object {
 
 					$DiskInfo = $_.Line.Split(" ")
 
@@ -111,9 +116,9 @@ Function Get-PARServer {
 
 			} Else {$Disk = $null}
 
-			If($Memory.StdOut) {
+			If($Memory) {
 
-				$Memory = ($Memory.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
+				$Memory = ($Memory | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
 
 					$MemoryInfo = $_.Split(":")
 
@@ -134,9 +139,9 @@ Function Get-PARServer {
 
 			Else {$Memory = $null}
 
-			If($Components.StdOut) {
+			If($Components) {
 
-				$Components = ($Components.StdOut | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
+				$Components = ($Components | Select-String '(.+)' -AllMatches).Matches.Value | ForEach-Object {
 
 					$Component = $_.Split(" ")
 
