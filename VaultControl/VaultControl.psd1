@@ -62,6 +62,7 @@
 		'Get-PARServer',
 		'Get-PARServerLog',
 		'Get-PARService',
+		'New-PARPassFile',
 		'Restart-PARComponent',
 		'Restart-PARServer',
 		'Set-PARComponentConfig',
@@ -81,7 +82,7 @@
 			Tags       = @('CyberArk', 'PARClient', 'Security')
 
 			# A URL to the license for this module.
-			LicenseUri = 'https://github.com/pspete/VaultControl/blob/master/LICENSE.md'
+			LicenseUri = 'https://github.com/pspete/VaultControl/blob/master/LICENSE'
 
 			# A URL to the main website for this project.
 			ProjectUri = 'https://github.com/pspete/VaultControl'
@@ -90,7 +91,7 @@
 			# IconUri = ''
 
 			# ReleaseNotes of this module
-			# ReleaseNotes = ''
+			ReleaseNotes = 'https://github.com/pspete/VaultControl/blob/master/CHANGELOG.md'
 
 		} # End of PSData hashtable
 

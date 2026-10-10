@@ -28,8 +28,9 @@
 	The PARClient command to execute
 
 	.PARAMETER PAROptions
-	Additional command parameters. By default specifies /Q /C and /StateFileName.
-	StateFileName is set to a file named after the process ID of the script, and with the local temp directory path
+	Additional command parameters. By default specifies /Q /C.
+	A new /StateFileName file in the local temp directory is specified for each command, and deleted after the command completes,
+	so log queries are not limited to records unread by a previous command.
 
 	.PARAMETER RemainingArgs
 	A catch all parameter, accepts any remaining values from pipeline.
@@ -46,6 +47,7 @@
     #>
 
 	[CmdLetBinding(SupportsShouldProcess)]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "RemainingArgs", Justification = "Catch-all for unbound pipeline properties")]
 	param(
 
 		[Parameter(
@@ -97,7 +99,7 @@
 		[Parameter(Mandatory = $False,
 			ValueFromPipelineByPropertyName = $True
 		)]
-		[string]$PAROptions = "/StateFileName $(Join-Path $env:temp "$PID.tmp") /Q /C",
+		[string]$PAROptions = "/Q /C",
 
 		[Parameter(Mandatory = $False,
 			ValueFromPipelineByPropertyName = $False,
@@ -110,7 +112,7 @@
 
 		Try {
 
-			Get-Variable -Name PAR -ErrorAction Stop
+			$null = Get-Variable -Name PAR -ErrorAction Stop
 
 			if($PAR.PSObject.Properties.Name -notcontains "ClientPath") {
 
@@ -143,7 +145,7 @@
 
 			}
 
-			"PassFile" {$PARCommand = "$Server /UsePassFile $PassFile"; break}
+			"PassFile" {$PARCommand = "$Server /UsePassFile `"$PassFile`""; break}
 
 		}
 
@@ -158,13 +160,16 @@
 
 		if ($PSCmdlet.ShouldProcess($Server, "$CommandParameters")) {
 
-			Write-Debug "Command Arguments: $PARCommand $PAROptions $CommandParameters"
+			$StateFile = Join-Path $env:temp "$([guid]::NewGuid()).tmp"
+			$Arguments = "$PARCommand /StateFileName `"$StateFile`" $PAROptions $CommandParameters"
+
+			Write-Debug "Command Arguments: $Arguments"
 
 			#Assign process parameters
 
 			$Process.StartInfo.WorkingDirectory = "$(Split-Path $PARClient -Parent)"
 			$Process.StartInfo.Filename = $PARClient
-			$Process.StartInfo.Arguments = "$PARCommand $PAROptions $CommandParameters"
+			$Process.StartInfo.Arguments = $Arguments
 			$Process.StartInfo.RedirectStandardOutput = $True
 			$Process.StartInfo.RedirectStandardError = $True
 			$Process.StartInfo.UseShellExecute = $False
@@ -172,16 +177,24 @@
 			$Process.StartInfo.WindowStyle = "hidden"
 
 			#Start Process
-			$Result = Start-PARClientProcess -Process $Process
+			Try {
+
+				$Result = Start-PARClientProcess -Process $Process
+
+			} Finally {
+
+				Remove-Item -Path $StateFile -Force -ErrorAction SilentlyContinue
+
+			}
 
 			$Result | Add-Member -MemberType NoteProperty -Name Server -Value $Server
 
-			if($Result.StdOut -match '((?:^[A-Z]{5}[0-9]{3}[A-Z])|(?:ERROR \(\d+\)))(?::)? (.+)$') {
+			if($Result.StdOut -match '((?:^[A-Z]{3,5}[0-9]{3}[A-Z])|(?:ERROR \(\d+\)))(?::)? ([^\r\n]+)') {
 
 				#PARCL002S Authentication failure.
 				Write-Error -Message $Matches[2] -ErrorId $Matches[1]
 
-			} ElseIf($Result.StdOut -match '(.+) \((.+: \d)\)') {
+			} ElseIf($Result.StdOut -match '(.+) \((Reason: \d+)\)') {
 
 				#Cannot get parameter DisableExceptionHandling. (Reason: 7)
 				Write-Error -Message $Matches[1] -ErrorId $Matches[2]

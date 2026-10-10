@@ -1,52 +1,39 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
+	#Module Name
+	$ModuleName = 'VaultControl'
 
-#Resolve Path to Module Directory
-$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+	#Resolve Path to Module Directory
+	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
 
-#Define Path to Module Manifest
-$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
+	#Define Path to Module Manifest
+	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
-if( -not (Get-Module -Name $ModuleName -All)) {
+	if ( -not (Get-Module -Name $ModuleName -All)) {
 
-	Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
 
-}
-
-BeforeAll {
-
-	#$Script:RequestBody = $null
+	}
 
 }
 
-AfterAll {
+Describe 'Get-PARServer' {
 
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
-
-	InModuleScope $ModuleName {
+	InModuleScope 'VaultControl' {
 
 		Context "Mandatory Parameters" {
 
-			$Parameters = @{Parameter = 'Server'},
-			@{Parameter = 'Password'},
-			@{Parameter = 'Credential'},
-			@{Parameter = 'PassFile'}
+			It "specifies parameter <Parameter> as mandatory" -TestCases @(
+				@{Parameter = 'Server'},
+				@{Parameter = 'Password'},
+				@{Parameter = 'Credential'},
+				@{Parameter = 'PassFile'}
+			) {
 
-			It "specifies parameter <Parameter> as mandatory" -TestCases $Parameters {
-
-				param($Parameter)
-
-				(Get-Command Get-PARServer).Parameters["$Parameter"].Attributes.Mandatory | Should Be $true
+				(Get-Command Get-PARServer).Parameters["$Parameter"].Attributes.Mandatory | Should -Be $true
 
 			}
 
@@ -73,7 +60,7 @@ Describe $FunctionName {
 					$InputObj | Get-PARServer
 				} catch {"catch test exception"}
 				Finally {
-					Assert-MockCalled Invoke-PARClient -Times 1 -Exactly -Scope It
+					Should -Invoke Invoke-PARClient -Times 1 -Exactly
 				}
 			}
 
@@ -83,7 +70,7 @@ Describe $FunctionName {
 					$Result = $InputObj | Get-PARServer
 				} catch {"catch test exception"}
 				Finally {
-					$Result | Should BeNullOrEmpty
+					$Result | Should -BeNullOrEmpty
 				}
 			}
 
@@ -108,7 +95,7 @@ Describe $FunctionName {
 
 				$InputObj | Get-PARServer -Verbose
 
-				Assert-MockCalled Invoke-PARClient -Times 4 -Exactly -Scope It
+				Should -Invoke Invoke-PARClient -Times 4 -Exactly
 
 			}
 
@@ -116,11 +103,11 @@ Describe $FunctionName {
 
 				$InputObj | Get-PARServer -verbose
 
-				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+				Should -Invoke Invoke-PARClient -ParameterFilter {
 
 					$CommandParameters -eq "GetCPU"
 
-				} -Times 1 -Scope It
+				} -Times 1
 
 			}
 
@@ -128,11 +115,11 @@ Describe $FunctionName {
 
 				$InputObj | Get-PARServer -verbose
 
-				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+				Should -Invoke Invoke-PARClient -ParameterFilter {
 
 					$CommandParameters -eq "GetDiskUsage"
 
-				} -Times 1 -Scope It
+				} -Times 1
 
 			}
 
@@ -140,11 +127,11 @@ Describe $FunctionName {
 
 				$InputObj | Get-PARServer -verbose
 
-				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+				Should -Invoke Invoke-PARClient -ParameterFilter {
 
 					$CommandParameters -eq "GetMemoryUsage"
 
-				} -Times 1 -Scope It
+				} -Times 1
 
 			}
 
@@ -153,11 +140,11 @@ Describe $FunctionName {
 
 				$InputObj | Get-PARServer -verbose
 
-				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+				Should -Invoke Invoke-PARClient -ParameterFilter {
 
 					$CommandParameters -eq "List"
 
-				} -Times 1 -Scope It
+				} -Times 1
 
 			}
 
@@ -215,39 +202,80 @@ PADR module PADR.exe                           10.2.3.4
 
 			It "reports expected cpu info" {
 
-				$InputObj | Get-PARServer | Select-Object -ExpandProperty "CPU(%)" | Should Be "12.34"
+				$InputObj | Get-PARServer | Select-Object -ExpandProperty "CPU(%)" | Should -Be "12.34"
 
 			}
 
 			It "reports expected disk info" {
 				$Output = $InputObj | Get-PARServer
-				$Output.Disk.Drive | Should Be "C:\"
-				$Output.Disk."FreeSpace(MB)" | Should Be "35336"
-				$Output.Disk."FreeSpace(%)" | Should Be "69.92"
+				$Output.Disk.Drive | Should -Be "C:\"
+				$Output.Disk."FreeSpace(MB)" | Should -Be "35336"
+				$Output.Disk."FreeSpace(%)" | Should -Be "69.92"
 
 			}
 
 			It "reports expected memory info" {
 				$Output = $InputObj | Get-PARServer
-				$Output.Memory[0].MemoryType | Should Be "Physical"
-				$Output.Memory[0]."Total(K)" | Should Be "1047580"
-				$Output.Memory[0]."Free(K)"  | Should Be "434336"
-				$Output.Memory[0]."Used(%)"  | Should Be "58.54"
-				$Output.Memory[1].MemoryType | Should Be "Swap"
-				$Output.Memory[1]."Total(K)" | Should Be "1834012"
-				$Output.Memory[1]."Free(K)"  | Should Be "479088"
-				$Output.Memory[1]."Used(%)"  | Should Be "73.88"
+				$Output.Memory[0].MemoryType | Should -Be "Physical"
+				$Output.Memory[0]."Total(K)" | Should -Be "1047580"
+				$Output.Memory[0]."Free(K)"  | Should -Be "434336"
+				$Output.Memory[0]."Used(%)"  | Should -Be "58.54"
+				$Output.Memory[1].MemoryType | Should -Be "Swap"
+				$Output.Memory[1]."Total(K)" | Should -Be "1834012"
+				$Output.Memory[1]."Free(K)"  | Should -Be "479088"
+				$Output.Memory[1]."Used(%)"  | Should -Be "73.88"
 
 			}
 
 			It "reports expected component info" {
 				$Output = $InputObj | Get-PARServer
-				$Output.Components[0].Component | Should Be "Vault"
-				$Output.Components[0].Version | Should Be "10.2.3.4"
-				$Output.Components[1].Component | Should Be "ENE"
-				$Output.Components[1].Version | Should Be "10.2.3.4"
-				$Output.Components[2].Component | Should Be "PADR"
-				$Output.Components[2].Version | Should Be "10.2.3.4"
+				$Output.Components[0].Component | Should -Be "Vault"
+				$Output.Components[0].Version | Should -Be "10.2.3.4"
+				$Output.Components[1].Component | Should -Be "ENE"
+				$Output.Components[1].Version | Should -Be "10.2.3.4"
+				$Output.Components[2].Component | Should -Be "PADR"
+				$Output.Components[2].Version | Should -Be "10.2.3.4"
+
+			}
+
+		}
+
+		Context "PARAgent Version Header" {
+
+			BeforeEach {
+
+				$Script:counter = 0
+				Mock Invoke-PARClient -MockWith {
+
+					$Script:counter++
+					$Header = "PARAgent version: 15.2.0.44`r`n"
+
+					switch ($Script:counter) {
+						1 {[PSCustomObject]@{"StdOut" = "$($Header)%0.0`r`n"}}
+						2 {[PSCustomObject]@{"StdOut" = "$($Header)C:\ 34740MB (68.58%)`r`n"}}
+						3 {[PSCustomObject]@{"StdOut" = "$($Header)Physical memory: Total=4193216K, Free=2103028K, Utilized=49.85%`r`nSwap memory: Total=5848328K, Free=630288K, Utilized=89.22%`r`n"}}
+						4 {[PSCustomObject]@{"StdOut" = "$($Header)Vault module dbmain.exe                        15.2.0.44`r`n"}}
+					}
+
+				}
+
+				$InputObj = [pscustomobject]@{
+					Server   = "SomeServer"
+					Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+				}
+
+			}
+
+			It "ignores version header in output" {
+				$Output = $InputObj | Get-PARServer
+				$Output."CPU(%)" | Should -Be "0.0"
+				@($Output.Disk).Count | Should -Be 1
+				$Output.Disk.Drive | Should -Be "C:\"
+				@($Output.Memory).Count | Should -Be 2
+				$Output.Memory[1]."Used(%)" | Should -Be "89.22"
+				@($Output.Components).Count | Should -Be 1
+				$Output.Components.Component | Should -Be "Vault"
+				$Output.Components.Version | Should -Be "15.2.0.44"
 
 			}
 

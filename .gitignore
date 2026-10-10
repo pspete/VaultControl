@@ -45,3 +45,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+CLAUDE.md
+.vscode/*
+Release/
+coverage.xml
+TestResults.xml
+codecov.exe
+build/
