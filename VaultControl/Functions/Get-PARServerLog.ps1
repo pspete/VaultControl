@@ -25,6 +25,7 @@ Function Get-PARServerLog {
 
 	.PARAMETER TimeFrom
 	A date time to return events from.
+	If not specified, PARAgent returns only events logged since the previous query made without TimeFrom.
 
 	.EXAMPLE
 	Get-PARServerLog -Server EPV1 -Credential $Cred -LogName Application
@@ -104,7 +105,7 @@ Function Get-PARServerLog {
 
 			$Logs = $Result.StdOut -replace '(?m)^PARAgent version:.*(\r?\n)?', '' | Select-String $Pattern -AllMatches
 
-			$Logs.Matches | ForEach-Object {
+			$Logs | Select-Object -ExpandProperty Matches | ForEach-Object {
 
 				[PSCustomObject]@{
 

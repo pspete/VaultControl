@@ -112,7 +112,29 @@ Description: The Software Protection service has stopped.
 
 		Context "Output" {
 
+			BeforeEach {
 
+				$InputObj = [pscustomobject]@{
+					Server   = "SomeServer"
+					Password = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					LogName  = "System"
+				}
+
+			}
+
+			It "returns no output and no error when no events are returned" {
+
+				Mock Invoke-PARClient -MockWith {
+					Write-Output @{
+						"StdOut" = "PARAgent version: 15.2.0.44`r`n"
+					}
+				}
+
+				$Result = $InputObj | Get-PARServerLog -ErrorVariable LogErrors
+				$Result | Should BeNullOrEmpty
+				$LogErrors | Should BeNullOrEmpty
+
+			}
 
 		}
 
