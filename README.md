@@ -37,6 +37,7 @@ Invoke CyberArk PARClient.exe Utility Commands with PowerShell
 - `Get-PARComponentConfig` - Gets DBParm/PADR parameter values
 - `Get-PARServerLog` - Gets OS event logs from vault server
 - `Get-PARService` - Gets status of monitored Operating System services
+- `New-PARPassFile` - Creates an encrypted PARClient password file for use with `-PassFile`
 - `Restart-PARComponent` - Restarts CyberArk Vault/PADR/ENE/CVM component
 - `Restart-PARServer` - Initiates reboot of Vault server
 - `Set-PARComponentConfig` - Updates DBParm/PADR parameter values

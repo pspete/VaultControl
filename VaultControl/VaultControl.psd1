@@ -62,6 +62,7 @@
 		'Get-PARServer',
 		'Get-PARServerLog',
 		'Get-PARService',
+		'New-PARPassFile',
 		'Restart-PARComponent',
 		'Restart-PARServer',
 		'Set-PARComponentConfig',
