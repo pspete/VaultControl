@@ -1,52 +1,53 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
+	#Module Name
+	$ModuleName = 'VaultControl'
 
-#Resolve Path to Module Directory
-$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+	#Resolve Path to Module Directory
+	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
 
-#Define Path to Module Manifest
-$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
+	#Define Path to Module Manifest
+	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
-#Module must be re-imported and imported preferences cleared for tests to complete
-Remove-Module -Name $ModuleName -Force -ErrorAction SilentlyContinue
-Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop
-& (Get-Module -Name $ModuleName) {Remove-Variable -Name PAR -Scope Script -ErrorAction SilentlyContinue}
+	if ( -not (Get-Module -Name $ModuleName -All)) {
 
-BeforeAll {
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
 
-	#$Script:RequestBody = $null
+	}
 
 }
 
-AfterAll {
+Describe 'Invoke-PARClient' {
 
-	#$Script:RequestBody = $null
+	InModuleScope 'VaultControl' {
 
-}
+		BeforeAll {
 
-Describe $FunctionName {
+			$Script:SavedPAR = $Script:PAR
+			Remove-Variable -Name PAR -Scope Script -ErrorAction SilentlyContinue
 
-	InModuleScope $ModuleName {
+		}
+
+		AfterAll {
+
+			$Script:PAR = $Script:SavedPAR
+
+		}
 
 		Context "Mandatory Parameters" {
 
-			$Parameters = @{Parameter = 'Server'},
-			@{Parameter = 'CommandParameters'},
-			@{Parameter = 'Password'},
-			@{Parameter = 'Credential'},
-			@{Parameter = 'PassFile'}
+			It "specifies parameter <Parameter> as mandatory" -TestCases @(
+				@{Parameter = 'Server'},
+				@{Parameter = 'CommandParameters'},
+				@{Parameter = 'Password'},
+				@{Parameter = 'Credential'},
+				@{Parameter = 'PassFile'}
+			) {
 
-			It "specifies parameter <Parameter> as mandatory" -TestCases $Parameters {
-
-				param($Parameter)
-
-				(Get-Command Invoke-PARClient).Parameters["$Parameter"].Attributes.Mandatory | Should Be $true
+				(Get-Command Invoke-PARClient).Parameters["$Parameter"].Attributes.Mandatory | Should -Be $true
 
 			}
 
@@ -74,13 +75,13 @@ Describe $FunctionName {
 
 			It "tests path" {
 
-				{$InputObj | Invoke-PARClient -ClientPath .\RandomFile.exe} | Should Throw
+				{$InputObj | Invoke-PARClient -ClientPath .\RandomFile.exe} | Should -Throw
 
 			}
 
 			It "throws if `$PAR variable not set in script scope" {
 
-				{$InputObj | Invoke-PARClient} | Should Throw
+				{$InputObj | Invoke-PARClient} | Should -Throw
 
 			}
 
@@ -92,7 +93,7 @@ Describe $FunctionName {
 				}
 				New-Variable -Name PAR -Value $object
 
-				{$InputObj | Invoke-PARClient} | Should Throw
+				{$InputObj | Invoke-PARClient} | Should -Throw
 
 			}
 
@@ -104,7 +105,7 @@ Describe $FunctionName {
 				}
 				New-Variable -Name PAR -Value $object
 
-				{$InputObj | Invoke-PARClient} | Should Throw
+				{$InputObj | Invoke-PARClient} | Should -Throw
 
 			}
 
@@ -116,7 +117,7 @@ Describe $FunctionName {
 				}
 				New-Variable -Name PAR -Value $object
 
-				{$InputObj | Invoke-PARClient} | Should Throw
+				{$InputObj | Invoke-PARClient} | Should -Throw
 
 			}
 
@@ -124,6 +125,18 @@ Describe $FunctionName {
 		}
 
 		Context "ParameterSets" {
+
+			BeforeAll {
+
+				Mock Test-Path -MockWith {
+					$true
+				}
+
+				Mock Export-Clixml -MockWith {}
+
+				Set-PARConfiguration -ClientPath "C:\SomePath\PARClient.exe"
+
+			}
 
 			BeforeEach {
 
@@ -150,13 +163,13 @@ Describe $FunctionName {
 			it "does not throw after Set-PARConfiguration has set the `$PAR variable" {
 
 				Set-PARConfiguration -ClientPath "C:\SomePath\PARClient.exe"
-				{$InputObj | Invoke-PARClient} | Should Not throw
+				{$InputObj | Invoke-PARClient} | Should -Not -Throw
 
 			}
 
 			it "does not require Set-PARConfiguration to be run more than once" {
 
-				{$InputObj | Invoke-PARClient} | Should Not throw
+				{$InputObj | Invoke-PARClient} | Should -Not -Throw
 
 			}
 
@@ -164,7 +177,7 @@ Describe $FunctionName {
 
 				$InputObj | Invoke-PARClient
 
-				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It
+				Should -Invoke Start-PARClientProcess -Times 1 -Exactly
 
 			}
 
@@ -178,7 +191,7 @@ Describe $FunctionName {
 
 				$InputObj | Invoke-PARClient
 
-				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It
+				Should -Invoke Start-PARClientProcess -Times 1 -Exactly
 
 			}
 
@@ -192,7 +205,7 @@ Describe $FunctionName {
 
 				$InputObj | Invoke-PARClient
 
-				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It
+				Should -Invoke Start-PARClientProcess -Times 1 -Exactly
 
 			}
 
@@ -206,7 +219,7 @@ Describe $FunctionName {
 
 				$InputObj | Invoke-PARClient
 
-				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Start-PARClientProcess -Times 1 -Exactly -ParameterFilter {
 
 					$Process.StartInfo.Arguments -match '^SomeServer /UsePassFile "C:\\Some Folder\\Some File" '
 
@@ -241,7 +254,7 @@ Describe $FunctionName {
 
 				}
 
-				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "Authentication failure."
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should -Throw "*Authentication failure.*"
 
 			}
 
@@ -256,7 +269,7 @@ Describe $FunctionName {
 
 				}
 
-				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "Something Awful."
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should -Throw "*Something Awful.*"
 
 			}
 
@@ -271,7 +284,7 @@ Describe $FunctionName {
 
 				}
 
-				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "Cannot get parameter DisableExceptionHandling."
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should -Throw "*Cannot get parameter DisableExceptionHandling.*"
 
 			}
 
@@ -286,7 +299,7 @@ Describe $FunctionName {
 
 				}
 
-				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Throw "is redundant"
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should -Throw "*is redundant*"
 
 			}
 
@@ -301,33 +314,38 @@ Describe $FunctionName {
 
 				}
 
-				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should Not Throw
+				{$InputObj | Invoke-PARClient -ErrorAction Stop} | Should -Not -Throw
 
 			}
 
 		}
 
 		Context "Command Arguments" {
-			Mock Test-Path -MockWith {
-				$true
-			}
 
-			Mock Start-PARClientProcess -MockWith {
-				Write-Output @{}
-			}
+			BeforeEach {
 
-			$InputObj = [pscustomobject]@{
-				Server            = "SomeServer"
-				CommandParameters = "Some Command Parameters"
-				Password          = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
-				Port              = 1234
+				Mock Test-Path -MockWith {
+					$true
+				}
+
+				Mock Start-PARClientProcess -MockWith {
+					Write-Output @{}
+				}
+
+				$InputObj = [pscustomobject]@{
+					Server            = "SomeServer"
+					CommandParameters = "Some Command Parameters"
+					Password          = ConvertTo-SecureString "SomePassword" -AsPlainText -Force
+					Port              = 1234
+				}
+
 			}
 
 			It "executes command with expected arguments" {
 
 				$InputObj | Invoke-PARClient
 
-				Assert-MockCalled Start-PARClientProcess -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Start-PARClientProcess -Times 1 -Exactly -ParameterFilter {
 
 					$Process.StartInfo.Arguments -match $('^SomeServer/SomePassword /Port 1234 /StateFileName "' + [regex]::Escape($env:temp) + '\\[0-9a-f-]{36}\.tmp" /Q /C "Some Command Parameters"$')
 
@@ -346,8 +364,8 @@ Describe $FunctionName {
 				$InputObj | Invoke-PARClient
 				$InputObj | Invoke-PARClient
 
-				$Script:StateFiles.Count | Should Be 2
-				$Script:StateFiles[0] | Should Not Be $Script:StateFiles[1]
+				$Script:StateFiles.Count | Should -Be 2
+				$Script:StateFiles[0] | Should -Not -Be $Script:StateFiles[1]
 
 			}
 
@@ -357,7 +375,7 @@ Describe $FunctionName {
 
 				$InputObj | Invoke-PARClient
 
-				Assert-MockCalled Remove-Item -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Remove-Item -Times 1 -Exactly -ParameterFilter {
 					$Path -match '[0-9a-f-]{36}\.tmp$'
 				}
 
@@ -368,9 +386,9 @@ Describe $FunctionName {
 				Mock Remove-Item -MockWith {}
 				Mock Start-PARClientProcess -MockWith { throw "Process Failed" }
 
-				{$InputObj | Invoke-PARClient} | Should Throw "Process Failed"
+				{$InputObj | Invoke-PARClient} | Should -Throw "*Process Failed*"
 
-				Assert-MockCalled Remove-Item -Times 1 -Exactly -Scope It
+				Should -Invoke Remove-Item -Times 1 -Exactly
 
 			}
 
@@ -382,8 +400,8 @@ Describe $FunctionName {
 
 				$Result = $InputObj | Invoke-PARClient
 
-				@($Result).Count | Should Be 1
-				$Result.StdOut | Should Be "Output"
+				@($Result).Count | Should -Be 1
+				$Result.StdOut | Should -Be "Output"
 
 			}
 

@@ -1,53 +1,40 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
+	#Module Name
+	$ModuleName = 'VaultControl'
 
-#Resolve Path to Module Directory
-$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+	#Resolve Path to Module Directory
+	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
 
-#Define Path to Module Manifest
-$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
+	#Define Path to Module Manifest
+	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
-if( -not (Get-Module -Name $ModuleName -All)) {
+	if ( -not (Get-Module -Name $ModuleName -All)) {
 
-	Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
 
-}
-
-BeforeAll {
-
-	#$Script:RequestBody = $null
+	}
 
 }
 
-AfterAll {
+Describe 'Get-PARServerLog' {
 
-	#$Script:RequestBody = $null
-
-}
-
-Describe $FunctionName {
-
-	InModuleScope $ModuleName {
+	InModuleScope 'VaultControl' {
 
 		Context "Mandatory Parameters" {
 
-			$Parameters = @{Parameter = 'Server'},
-			@{Parameter = 'Password'},
-			@{Parameter = 'Credential'},
-			@{Parameter = 'PassFile'},
-			@{Parameter = "LogName"}
+			It "specifies parameter <Parameter> as mandatory" -TestCases @(
+				@{Parameter = 'Server'},
+				@{Parameter = 'Password'},
+				@{Parameter = 'Credential'},
+				@{Parameter = 'PassFile'},
+				@{Parameter = "LogName"}
+			) {
 
-			It "specifies parameter <Parameter> as mandatory" -TestCases $Parameters {
-
-				param($Parameter)
-
-				(Get-Command Get-PARServerLog).Parameters["$Parameter"].Attributes.Mandatory | Should Be $true
+				(Get-Command Get-PARServerLog).Parameters["$Parameter"].Attributes.Mandatory | Should -Be $true
 
 			}
 
@@ -86,7 +73,7 @@ Description: The Software Protection service has stopped.
 
 				$InputObj | Get-PARServerLog -verbose
 
-				Assert-MockCalled Invoke-PARClient -Times 1 -Exactly -Scope It
+				Should -Invoke Invoke-PARClient -Times 1 -Exactly
 
 			}
 
@@ -101,11 +88,11 @@ Description: The Software Protection service has stopped.
 
 				$InputObj | Get-PARServerLog -verbose
 
-				Assert-MockCalled Invoke-PARClient -ParameterFilter {
+				Should -Invoke Invoke-PARClient -ParameterFilter {
 
 					$CommandParameters -eq "GetOSLog /Name Application /TimeFrom 01011970:1234"
 
-				} -Times 1 -Exactly -Scope It
+				} -Times 1 -Exactly
 			}
 
 			It "defaults TimeFrom to 24 hours ago" {
@@ -122,11 +109,11 @@ Description: The Software Protection service has stopped.
 				$InputObj | Get-PARServerLog
 				$After = (Get-Date).AddDays(-1)
 
-				Assert-MockCalled Get-Date -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Get-Date -Times 1 -Exactly -ParameterFilter {
 					$Format -eq "ddMMyyyy:HHmm" -and $Date -ge $Before -and $Date -le $After
 				}
 
-				Assert-MockCalled Invoke-PARClient -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Invoke-PARClient -Times 1 -Exactly -ParameterFilter {
 					$CommandParameters -eq "GetOSLog /Name System /TimeFrom TimeStamp"
 				}
 
@@ -155,8 +142,8 @@ Description: The Software Protection service has stopped.
 				}
 
 				$Result = $InputObj | Get-PARServerLog -ErrorVariable LogErrors
-				$Result | Should BeNullOrEmpty
-				$LogErrors | Should BeNullOrEmpty
+				$Result | Should -BeNullOrEmpty
+				$LogErrors | Should -BeNullOrEmpty
 
 			}
 
@@ -165,8 +152,6 @@ Description: The Software Protection service has stopped.
 				@{Raw = '3221232472'; Expected = 7000},
 				@{Raw = '6005'; Expected = 6005}
 			) {
-
-				param($Raw, $Expected)
 
 				Mock Invoke-PARClient -MockWith {
 					Write-Output @{
@@ -183,8 +168,8 @@ Description: The Software Protection service entered the stopped state.
 				}
 
 				$Result = $InputObj | Get-PARServerLog
-				$Result.EventID | Should Be $Expected
-				$Result.EventID | Should BeOfType [int]
+				$Result.EventID | Should -Be $Expected
+				$Result.EventID | Should -BeOfType [int]
 
 			}
 

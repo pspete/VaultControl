@@ -2,10 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## Unreleased
+
+### Added
 
 - Add `New-PARPassFile`
   - Creates an encrypted PARClient password file for use with `-PassFile`.
+
+### Changed
+
 - Update `Get-PARServer` & `Get-PARServerLog`
   - Fixed parsing of PARAgent 15.x output, which includes a `PARAgent version` header line.
 - Update `Get-PARServerLog`
@@ -22,6 +27,8 @@ All notable changes to this project will be documented in this file.
   - Output containing `(<Text>: <Number>)` is no longer reported as an error; only `(Reason: <Number>)` is.
 - Resolved PSScriptAnalyzer findings.
 - Tests no longer delete or overwrite the user's `PARConfiguration.xml`.
+- Help is now external help (`en-US/VaultControl-help.xml`), generated from the command markdown in `docs/collections/_commands`.
+- Build, test and release moved from AppVeyor to GitHub Actions.
 
 ## [1.1.54] - 2020-02-12
 

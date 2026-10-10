@@ -1,0 +1,2832 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helpItems xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" schema="maml" xmlns="http://msh">
+  <command:command>
+    <command:details>
+      <command:name>Get-PARComponent</command:name>
+      <maml:description>
+        <maml:para>Queries the status of a component running on a remote vault server</maml:para>
+      </maml:description>
+      <command:verb>Get</command:verb>
+      <command:noun>PARComponent</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Gets status of remote Vault, PADR, CVM or ENE component</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Component</maml:name>
+        <maml:description>
+          <maml:para>The name of the component to query.
+Vault, PADR, CVM or ENE are the accepted values</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARComponent -Server 10.10.10.10 -Password $SecureString -Component Vault
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Returns status of Vault service on remote vault with address 10.10.10.10</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Get-PARComponentConfig</command:name>
+      <maml:description>
+        <maml:para>Gets values set in component configuration files</maml:para>
+      </maml:description>
+      <command:verb>Get</command:verb>
+      <command:noun>PARComponentConfig</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Queries remote vault server for values contained in component configuration files DBPARM.ini or PADR.ini.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponentConfig</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Parameter</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponentConfig</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Parameter</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponentConfig</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Parameter</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Component</maml:name>
+        <maml:description>
+          <maml:para>The name of the component to query.
+Vault or PADR are the accepted values</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Parameter</maml:name>
+        <maml:description>
+          <maml:para>The name of the Parameter to get the value of.
+For Vault Components, the valid parameter names are:
+"DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
+For Disaster Recovery Components, the valid parameter names are:
+"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARComponentConfig -Server EPV1 -Credential $credential -Component Vault -Parameter DebugLevel
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Returns the DebugLevel parameter value configured in the dbparm.ini file on vault server EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Get-PARComponentLog</command:name>
+      <maml:description>
+        <maml:para>Returns events from remote component log.</maml:para>
+      </maml:description>
+      <command:verb>Get</command:verb>
+      <command:noun>PARComponentLog</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Gets events from logs for remote Vault, PADR, CVM or ENE.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponentLog</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>LogFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>TimeFrom</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Lines</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponentLog</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>LogFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>TimeFrom</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Lines</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARComponentLog</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>LogFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>TimeFrom</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Lines</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Component</maml:name>
+        <maml:description>
+          <maml:para>The name of the component to query.
+Vault, PADR, CVM or ENE are the accepted values</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Lines</maml:name>
+        <maml:description>
+          <maml:para>For Vault log queries, optionally provide the number of log lines to return.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>LogFile</maml:name>
+        <maml:description>
+          <maml:para>For ENE &amp; CVM Logs, the log file to return must be specified.
+Accepted values are "Console" or "Trace"</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>TimeFrom</maml:name>
+        <maml:description>
+          <maml:para>For Vault or PADR log queries, optionally provide a datetime from which to return the logs from.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">DateTime</command:parameterValue>
+        <dev:type>
+          <maml:name>DateTime</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARComponentLog -Server EPV1 -Password $SecureString -Component Vault -TimeFrom (Get-Date).AddDays(-1)
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Show events from the ITALOG file on Vault EPV1 from the last 24 hours</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 2 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARComponentLog -Server EPV1 -Password $SecureString -Component ENE -LogFile Trace
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Show events from the ENE Trace log on vault EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 3 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARComponentLog -Server EPV1 -Password $SecureString -Component Vault -Lines 10
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Show the last 10 lines of the ITALOG file on vault EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Get-PARServer</command:name>
+      <maml:description>
+        <maml:para>Gets OS resource information from remote vault</maml:para>
+      </maml:description>
+      <command:verb>Get</command:verb>
+      <command:noun>PARServer</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns details of CPU, Memory &amp; Free Disk space from remote vault, as well as details of installed components.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PARServer</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARServer</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARServer</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARServer -Server EPV1
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Returns object containing current resource consumption &amp; installed component names &amp; versions.</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Get-PARServerLog</command:name>
+      <maml:description>
+        <maml:para>Returns events from Server Event Logs</maml:para>
+      </maml:description>
+      <command:verb>Get</command:verb>
+      <command:noun>PARServerLog</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Queries remote vault server and returns events from specified OS Logs.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PARServerLog</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>LogName</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>TimeFrom</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARServerLog</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>LogName</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>TimeFrom</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARServerLog</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>LogName</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>TimeFrom</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>LogName</maml:name>
+        <maml:description>
+          <maml:para>The name of the event log to return events from.
+Application, Security &amp; System are the accepted values.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>TimeFrom</maml:name>
+        <maml:description>
+          <maml:para>A date time to return events from.
+Defaults to 24 hours before the current time.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">DateTime</command:parameterValue>
+        <dev:type>
+          <maml:name>DateTime</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARServerLog -Server EPV1 -Credential $Cred -LogName Application
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Get events logged in the last 24 hours from Application log on vault EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 2 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARServerLog -Server zEPV1 -Credential $Cred -LogName System -TimeFrom (Get-Date 5/5/2018)
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Get all events from the System log since Cinco de Mayo 2018 on vault EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Get-PARService</command:name>
+      <maml:description>
+        <maml:para>Gets status of Operating System Services on Vault Server.</maml:para>
+      </maml:description>
+      <command:verb>Get</command:verb>
+      <command:noun>PARService</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>For services listed as allowed to be monitored with PARClient, returns the running status of the service.
+By default returns the status of all monitored services.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PARService</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>ServiceName</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARService</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>ServiceName</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PARService</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>ServiceName</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>ServiceName</maml:name>
+        <maml:description>
+          <maml:para>The service to return the status of</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARService -Server EPV1 -Password $SecureString
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Returns details of all monitored services</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 2 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Get-PARService -Server EPV1 -Password $SecureString -ServiceName "PrivateArk Database"
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Returns details of PrivateArk Database service</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>New-PARPassFile</command:name>
+      <maml:description>
+        <maml:para>Creates a PARClient password file</maml:para>
+      </maml:description>
+      <command:verb>New</command:verb>
+      <command:noun>PARPassFile</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Runs PARClient.exe /CreatePassFile to create a file containing an encrypted password, for use with the
+PassFile parameter of other module functions.
+PARClient prompts for the password interactively in the console; the password cannot be supplied as a
+parameter.
+PARClient prompts again until the new and confirmed passwords match.
+The password is not validated against any vault when the file is created.
+An existing file at the specified path is overwritten.
+The created file is only valid on the computer on which it was created.
+The parent folder of the file is created if it does not exist.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>New-PARPassFile</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="none">
+          <maml:name>Path</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="1" aliases="none">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>The path of the password file to create</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs.
+The cmdlet is not run.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+New-PARPassFile -Path C:\PARClient\vault.pass
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Prompts for a password and creates encrypted password file C:\PARClient\vault.pass.</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 2 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+New-PARPassFile -Path C:\PARClient\vault.pass
+Get-PARComponent -Server EPV1 -PassFile C:\PARClient\vault.pass -Component Vault
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Creates a password file, then uses it to get the status of the Vault component on EPV1.</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Restart-PARComponent</command:name>
+      <maml:description>
+        <maml:para>Restarts a Vault or PADR Component</maml:para>
+      </maml:description>
+      <command:verb>Restart</command:verb>
+      <command:noun>PARComponent</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Issues a restart command to a remote Vault or DR Vault component</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Restart-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Restart-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Restart-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Component</maml:name>
+        <maml:description>
+          <maml:para>The name of the component to restart.
+Vault or PADR are the accepted values</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs.
+The cmdlet is not run.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Restart-PARComponent -Server EPV1 -Credential $cred -Component Vault
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Restarts the Vault service on Server EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 2 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Restart-PARComponent -Server EPV2 -PassFile C:\PassFile.pass -Component PADR
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Restarts the PADR service on Server EPV2, using encrypted password contained in C:\PassFile.pass</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Restart-PARServer</command:name>
+      <maml:description>
+        <maml:para>Reboots a remote Vault Server</maml:para>
+      </maml:description>
+      <command:verb>Restart</command:verb>
+      <command:noun>PARServer</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Initiates a reboot of a remote vault server</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Restart-PARServer</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Restart-PARServer</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Restart-PARServer</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs.
+The cmdlet is not run.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Restart-PARServer -Server EPV1 -Password $SecureString
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Initiates Reboot of EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Set-PARComponentConfig</command:name>
+      <maml:description>
+        <maml:para>Sets values set in component configuration files</maml:para>
+      </maml:description>
+      <command:verb>Set</command:verb>
+      <command:noun>PARComponentConfig</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Sets values contained in component configuration files DBPARM.ini or PADR.ini on remote vault server.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-PARComponentConfig</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Parameter</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Value</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Mode</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Set-PARComponentConfig</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Parameter</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Value</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Mode</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Set-PARComponentConfig</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Parameter</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Value</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Mode</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Component</maml:name>
+        <maml:description>
+          <maml:para>The name of the component to query.
+Vault or PADR are the accepted values</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Mode</maml:name>
+        <maml:description>
+          <maml:para>Specify how or when the paramater value change will take effect.
+For Vault parameter value changes "Temporary", "Permanent" or "Immediate" modes can be specified.</maml:para>
+          <maml:para>For Disaster Recovery  parameter value changes only "Permanent" mode can be specified.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Parameter</maml:name>
+        <maml:description>
+          <maml:para>The name of the Parameter to set the value for.
+For Vault Components, valid parameter names are:
+"DefaultTimeout", "MTU", "SecurityNotification", "DebugLevel", "DisableExceptionHandling"
+For Disaster Recovery Components, valid parameter names are:
+"EnableCheck", "EnableReplicate", "EnableFailover", "EnableDBSync", "FailoverMode"</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Value</maml:name>
+        <maml:description>
+          <maml:para>The value to set for the parameter in the configuration file</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs.
+The cmdlet is not run.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Set-PARComponentConfig -Server EPV1 -Credential $credential -Component Vault -Parameter DefaultTimeout -Value 300
+```</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Set-PARConfiguration</command:name>
+      <maml:description>
+        <maml:para>Sets a variable in the script scope which holds default values for PARClient operations.
+Must be run prior to other module functions if path to PARClient has not been previously set.</maml:para>
+      </maml:description>
+      <command:verb>Set</command:verb>
+      <command:noun>PARConfiguration</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Sets properties on an object which is set as the value of a variable in the script scope.
+The created variable can be queried and used by other module functions to provide default values.
+Creates a file in the logged on users home folder named PARConfiguration.xml.
+This file contains the variable
+used by the module, and will be imported with the module.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-PARConfiguration</maml:name>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="none">
+          <maml:name>ClientPath</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1" aliases="none">
+          <maml:name>Port</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="1" aliases="none">
+        <maml:name>ClientPath</maml:name>
+        <maml:description>
+          <maml:para>The path to the PARClient.exe utility</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="2" aliases="none">
+        <maml:name>Port</maml:name>
+        <maml:description>
+          <maml:para>The number of any custom port configured for use between PARClient &amp; a vault</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs.
+The cmdlet is not run.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Set-PARConfiguration -ClientPath D:\Path\To\PARClient.exe
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Sets default path to PARClient to D:\Path\To\PARClient.exe.
+This is accessed via the variable property $Script:PAR.ClientPath
+Creates C:\users\user\PARConfiguration.xml file to hold values for persistence.</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 2 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Set-PARConfiguration -ClientPath D:\Path\To\PARClient.exe -Port 9023
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Sets default path to PARClient to D:\Path\To\PARClient.exe.
+This is accessed via the variable property $Script:PAR.ClientPath
+Sets default PARClient port to 9023
+This is accessed via the variable property $Script:PAR.Port
+Creates C:\users\user\PARConfiguration.xml file to hold values for persistence.</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Start-PARComponent</command:name>
+      <maml:description>
+        <maml:para>Starts a component service</maml:para>
+      </maml:description>
+      <command:verb>Start</command:verb>
+      <command:noun>PARComponent</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Starts a stopped Vault, CVM, PADR or ENE component on a remote server</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Start-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Last</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Start-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Last</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Start-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Last</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Component</maml:name>
+        <maml:description>
+          <maml:para>The name of the component to query.
+Vault, PADR, CVM or ENE are the accepted values</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="none">
+        <maml:name>Last</maml:name>
+        <maml:description>
+          <maml:para>For the Vault component, start with the last known good configuration.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs.
+The cmdlet is not run.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Start-PARComponent -Server EPV1 -Component Vault
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Starts the Vault service on Vault Server EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 2 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Start-PARComponent -Server EPV1 -Component PADR
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Starts the PADR service on Vault Server EPV2</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 3 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Start-PARComponent -Server EPV1 -Component ENE
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Starts the ENE service on Vault Server EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command>
+    <command:details>
+      <command:name>Stop-PARComponent</command:name>
+      <maml:description>
+        <maml:para>Stops a component service</maml:para>
+      </maml:description>
+      <command:verb>Stop</command:verb>
+      <command:noun>PARComponent</command:noun>
+    </command:details>
+    <maml:description>
+      <maml:para>Stops a running Vault, CVM, PADR or ENE component on a remote server</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Stop-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>ShutdownMode</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Stop-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>ShutdownMode</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Stop-PARComponent</maml:name>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Server</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>PassFile</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Component</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>ShutdownMode</maml:name>
+          <maml:description />
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>WhatIf</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+        <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="none">
+          <maml:name>Confirm</maml:name>
+          <maml:description />
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          </dev:type>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Component</maml:name>
+        <maml:description>
+          <maml:para>The name of the component to query.
+Vault, PADR, CVM or ENE are the accepted values.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient held in a credential object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>PassFile</maml:name>
+        <maml:description>
+          <maml:para>The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
+operations via PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para>The password for remote operations via PARClient as a secure string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">SecureString</command:parameterValue>
+        <dev:type>
+          <maml:name>SecureString</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>Server</maml:name>
+        <maml:description>
+          <maml:para>The name or address of the remote Vault server to target with PARClient</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="Named" aliases="none">
+        <maml:name>ShutdownMode</maml:name>
+        <maml:description>
+          <maml:para>Specify "Normal", "Immediate" or "Terminate" shutdown mode for stop operation against Vault service.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+      </command:parameter>
+      <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="Named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs.
+The cmdlet is not run.</maml:para>
+        </maml:description>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para />
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>--------- EXAMPLE 1 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Stop-PARComponent -Server EPV1 -Component Vault
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Stops the Vault service on Vault Server EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 2 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Stop-PARComponent -Server EPV1 -Component PADR
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Stops the PADR service on Vault Server EPV2</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 3 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>```
+Stop-PARComponent -Server EPV1 -Component ENE
+```</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Stops the ENE service on Vault Server EPV1</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+</helpItems>

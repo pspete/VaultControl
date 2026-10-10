@@ -1,29 +1,5 @@
+# .ExternalHelp VaultControl-help.xml
 Function Get-PARServer {
-	<#
-	.SYNOPSIS
-	Gets OS resource information from remote vault
-
-	.DESCRIPTION
-	Returns details of CPU, Memory & Free Disk space from remote vault, as well as details of installed components.
-
-	.PARAMETER Server
-	The name or address of the remote Vault server to target with PARClient
-
-	.PARAMETER Password
-	The password for remote operations via PARClient as a secure string
-
-	.PARAMETER Credential
-	The password for remote operations via PARClient held in a credential object
-
-	.PARAMETER PassFile
-	The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
-	operations via PARClient
-
-	.EXAMPLE
-	Get-PARServer -Server EPV1
-
-	Returns object containing current resource consumption & installed component names & versions.
-	#>
 	[CmdletBinding()]
 	Param(
 		[Parameter(

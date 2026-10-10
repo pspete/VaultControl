@@ -1,42 +1,5 @@
+# .ExternalHelp VaultControl-help.xml
 Function Get-PARServerLog {
-	<#
-	.SYNOPSIS
-	Returns events from Server Event Logs
-
-	.DESCRIPTION
-	Queries remote vault server and returns events from specified OS Logs.
-
-	.PARAMETER Server
-	The name or address of the remote Vault server to target with PARClient
-
-	.PARAMETER Password
-	The password for remote operations via PARClient as a secure string
-
-	.PARAMETER Credential
-	The password for remote operations via PARClient held in a credential object
-
-	.PARAMETER PassFile
-	The path to a "password" file created by PARClient.exe, containing the encrypted password value used for remote
-	operations via PARClient
-
-	.PARAMETER LogName
-	The name of the event log to return events from.
-	Application, Security & System are the accepted values.
-
-	.PARAMETER TimeFrom
-	A date time to return events from.
-	Defaults to 24 hours before the current time.
-
-	.EXAMPLE
-	Get-PARServerLog -Server EPV1 -Credential $Cred -LogName Application
-
-	Get events logged in the last 24 hours from Application log on vault EPV1
-
-	.EXAMPLE
-	Get-PARServerLog -Server zEPV1 -Credential $Cred -LogName System -TimeFrom (Get-Date 5/5/2018)
-
-	Get all events from the System log since Cinco de Mayo 2018 on vault EPV1
-	#>
 	[CmdletBinding()]
 	Param(
 		[Parameter(

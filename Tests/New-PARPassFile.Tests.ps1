@@ -1,27 +1,28 @@
-#Get Current Directory
-$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+BeforeDiscovery {
 
-#Get Function Name
-$FunctionName = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -Replace ".Tests.ps1"
+	#Get Current Directory
+	$Here = Split-Path -Parent $PSCommandPath
 
-#Assume ModuleName from Repository Root folder
-$ModuleName = Split-Path (Split-Path $Here -Parent) -Leaf
+	#Module Name
+	$ModuleName = 'VaultControl'
 
-#Resolve Path to Module Directory
-$ModulePath = Resolve-Path "$Here\..\$ModuleName"
+	#Resolve Path to Module Directory
+	$ModulePath = Resolve-Path "$Here\..\$ModuleName"
 
-#Define Path to Module Manifest
-$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
+	#Define Path to Module Manifest
+	$ManifestPath = Join-Path "$ModulePath" "$ModuleName.psd1"
 
-if( -not (Get-Module -Name $ModuleName -All)) {
+	if ( -not (Get-Module -Name $ModuleName -All)) {
 
-	Import-Module -Name "$ManifestPath"  -ArgumentList $true -Force -ErrorAction Stop
+		Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+
+	}
 
 }
 
-Describe $FunctionName {
+Describe 'New-PARPassFile' {
 
-	InModuleScope $ModuleName {
+	InModuleScope 'VaultControl' {
 
 		Context "Configuration" {
 
@@ -42,14 +43,14 @@ Describe $FunctionName {
 
 			It "throws if PARClient path is not set" {
 
-				{New-PARPassFile -Path "C:\SomeFolder\SomeFile.pass"} | Should Throw "PARClient.exe not found"
+				{New-PARPassFile -Path "C:\SomeFolder\SomeFile.pass"} | Should -Throw "*PARClient.exe not found*"
 
 			}
 
 			It "does not invoke PARClient if path is not set" {
 
-				{New-PARPassFile -Path "C:\SomeFolder\SomeFile.pass"} | Should Throw
-				Assert-MockCalled Start-Process -Times 0 -Exactly -Scope It
+				{New-PARPassFile -Path "C:\SomeFolder\SomeFile.pass"} | Should -Throw
+				Should -Invoke Start-Process -Times 0 -Exactly
 
 			}
 
@@ -85,14 +86,14 @@ Describe $FunctionName {
 			It "invokes PARClient" {
 
 				New-PARPassFile -Path "C:\Some Folder\SomeFile.pass"
-				Assert-MockCalled Start-Process -Times 1 -Exactly -Scope It
+				Should -Invoke Start-Process -Times 1 -Exactly
 
 			}
 
 			It "invokes configured PARClient path" {
 
 				New-PARPassFile -Path "C:\Some Folder\SomeFile.pass"
-				Assert-MockCalled Start-Process -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Start-Process -Times 1 -Exactly -ParameterFilter {
 
 					$FilePath -eq "C:\PARClient\PARClient.exe"
 
@@ -103,7 +104,7 @@ Describe $FunctionName {
 			It "uses PARClient folder as working directory" {
 
 				New-PARPassFile -Path "C:\Some Folder\SomeFile.pass"
-				Assert-MockCalled Start-Process -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Start-Process -Times 1 -Exactly -ParameterFilter {
 
 					$WorkingDirectory -eq "C:\PARClient"
 
@@ -114,7 +115,7 @@ Describe $FunctionName {
 			It "passes quoted path to CreatePassFile" {
 
 				New-PARPassFile -Path "C:\Some Folder\SomeFile.pass"
-				Assert-MockCalled Start-Process -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Start-Process -Times 1 -Exactly -ParameterFilter {
 
 					$ArgumentList -eq '/CreatePassFile "C:\Some Folder\SomeFile.pass"'
 
@@ -125,7 +126,7 @@ Describe $FunctionName {
 			It "runs PARClient in current console and waits" {
 
 				New-PARPassFile -Path "C:\Some Folder\SomeFile.pass"
-				Assert-MockCalled Start-Process -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke Start-Process -Times 1 -Exactly -ParameterFilter {
 
 					$NoNewWindow -and $Wait -and $PassThru
 
@@ -136,21 +137,21 @@ Describe $FunctionName {
 			It "returns created file" {
 
 				$Output = New-PARPassFile -Path "C:\Some Folder\SomeFile.pass"
-				$Output.FullName | Should Be "C:\Some Folder\SomeFile.pass"
+				$Output.FullName | Should -Be "C:\Some Folder\SomeFile.pass"
 
 			}
 
 			It "accepts path from pipeline" {
 
 				[pscustomobject]@{Path = "C:\Some Folder\SomeFile.pass"} | New-PARPassFile
-				Assert-MockCalled Start-Process -Times 1 -Exactly -Scope It
+				Should -Invoke Start-Process -Times 1 -Exactly
 
 			}
 
 			It "does not create existing folder" {
 
 				New-PARPassFile -Path "C:\Some Folder\SomeFile.pass"
-				Assert-MockCalled New-Item -Times 0 -Exactly -Scope It
+				Should -Invoke New-Item -Times 0 -Exactly
 
 			}
 
@@ -159,7 +160,7 @@ Describe $FunctionName {
 				Mock Test-Path -MockWith {$false} -ParameterFilter {$PathType -eq "Container"}
 
 				New-PARPassFile -Path "C:\Some Folder\SomeFile.pass"
-				Assert-MockCalled New-Item -Times 1 -Exactly -Scope It -ParameterFilter {
+				Should -Invoke New-Item -Times 1 -Exactly -ParameterFilter {
 
 					$Path -eq "C:\Some Folder" -and $ItemType -eq "Directory"
 
@@ -170,7 +171,7 @@ Describe $FunctionName {
 			It "does not invoke PARClient with WhatIf" {
 
 				New-PARPassFile -Path "C:\Some Folder\SomeFile.pass" -WhatIf
-				Assert-MockCalled Start-Process -Times 0 -Exactly -Scope It
+				Should -Invoke Start-Process -Times 0 -Exactly
 
 			}
 
@@ -180,7 +181,7 @@ Describe $FunctionName {
 					[pscustomobject]@{ExitCode = 1}
 				}
 
-				{New-PARPassFile -Path "C:\Some Folder\SomeFile.pass" -ErrorAction Stop} | Should Throw "Failed to create password file"
+				{New-PARPassFile -Path "C:\Some Folder\SomeFile.pass" -ErrorAction Stop} | Should -Throw "*Failed to create password file*"
 
 			}
 
@@ -188,7 +189,7 @@ Describe $FunctionName {
 
 				Mock Test-Path -MockWith {$false} -ParameterFilter {$PathType -eq "Leaf"}
 
-				{New-PARPassFile -Path "C:\Some Folder\SomeFile.pass" -ErrorAction Stop} | Should Throw "Failed to create password file"
+				{New-PARPassFile -Path "C:\Some Folder\SomeFile.pass" -ErrorAction Stop} | Should -Throw "*Failed to create password file*"
 
 			}
 
